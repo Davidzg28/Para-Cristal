@@ -81,6 +81,21 @@
       padding: 35px 22px;
       text-align: center;
       position: relative;
+      display: none; /* Se muestran una por una con Javascript */
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    .card.active {
+      display: block;
+    }
+
+    .card-step {
+      color: #60a5fa;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
     }
 
     .title-text {
@@ -90,7 +105,7 @@
       font-family: 'Playfair Display', serif;
     }
 
-    .game-icon {
+    .icon-box {
       font-size: 3.5rem;
       margin-bottom: 15px;
       animation: float 3s ease-in-out infinite;
@@ -131,6 +146,18 @@
       transition: all 0.2s ease;
     }
 
+    .btn-next {
+      background: linear-gradient(90deg, #1e40af, #2563eb);
+      color: white;
+      box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
+      width: 100%;
+    }
+
+    .btn-next:hover {
+      transform: scale(1.03);
+      background: linear-gradient(90deg, #1d4ed8, #3b82f6);
+    }
+
     .btn-yes {
       background: linear-gradient(90deg, #2563eb, #3b82f6);
       color: white;
@@ -147,11 +174,6 @@
       color: #94a3b8;
       position: absolute;
       right: 20px;
-    }
-
-    #success-screen {
-      display: none;
-      animation: fadeIn 1.2s ease-in-out;
     }
 
     .success-title {
@@ -198,7 +220,7 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
+      from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
     }
   </style>
@@ -217,14 +239,47 @@
 
   <main class="app-container">
     
-    <!-- PANTALLA PRINCIPAL -->
-    <div id="question-screen" class="card">
-      <h1 class="title-text">¿Quieres ser mi novia, Cristal? 💙🖤</h1>
-      
-      <div class="game-icon">🎮✨</div>
-
+    <!-- TARJETA 1 -->
+    <div id="card-1" class="card active">
+      <div class="card-step">Tarjeta 1 de 4</div>
+      <h1 class="title-text">¡Hola, Cristal! 👋💙</h1>
+      <div class="icon-box">🎮✨</div>
       <p class="card-caption">
-        Desde que nos conocimos en <b>Free Fire</b> hace un mes y medio, las partidas y mis días se volvieron mucho mejores. Quien diría que en un juego me encontraría a alguien tan especial como tú... ¡Me encantas! 💙
+        Hace un mes y medio coincidimos por primera vez jugando <b>Free Fire</b>. Lo que empezó como una simple partida terminó convirtiéndose en lo mejor de mis días...
+      </p>
+      <button class="btn btn-next" onclick="siguienteTarjeta(2)">Siguiente ➡️</button>
+    </div>
+
+    <!-- TARJETA 2 -->
+    <div id="card-2" class="card">
+      <div class="card-step">Tarjeta 2 de 4</div>
+      <h1 class="title-text">Un detalle para ti 💙🖤</h1>
+      <div class="icon-box">🎨👑</div>
+      <p class="card-caption">
+        Sé que tus colores favoritos son el <b>azul y el negro</b>, por eso preparé este espacio pensado en tus gustos para decirte lo especial que eres para mí.
+      </p>
+      <button class="btn btn-next" onclick="siguienteTarjeta(3)">Siguiente ➡️</button>
+    </div>
+
+    <!-- TARJETA 3 -->
+    <div id="card-3" class="card">
+      <div class="card-step">Tarjeta 3 de 4</div>
+      <h1 class="title-text">Coincidencia Divina 🌌</h1>
+      <div class="icon-box">🪐✨</div>
+      <p class="card-caption">
+        <i>"En un universo infinitamente grande, mi lugar favorito siempre será haber coincidido contigo."</i><br><br>
+        Cada risa, cada charla y cada partida compartida contigo se han vuelto inigualables.
+      </p>
+      <button class="btn btn-next" onclick="siguienteTarjeta(4)">Ver pregunta final ✨</button>
+    </div>
+
+    <!-- TARJETA 4 (PREGUNTA FINAL) -->
+    <div id="card-4" class="card">
+      <div class="card-step">Última tarjeta</div>
+      <h1 class="title-text">Tengo una pregunta... 💙🖤</h1>
+      <div class="icon-box">💍🔥</div>
+      <p class="card-caption" style="text-align: center; font-size: 1.1rem; font-weight: 600;">
+        ¿Quieres dar el siguiente paso y ser mi novia, Cristal?
       </p>
       
       <div class="buttons-container" id="btn-box">
@@ -243,8 +298,7 @@
 
       <div class="universe-phrases">
         <ul>
-          <li><i>"En un universo de infinitas estrellas, mi lugar favorito siempre será coincidir contigo."</i> 🌌</li>
-          <li><i>"No importa cuántos galaxias existan, encontrarte a ti fue mi mayor victoria."</i> 🪐💙</li>
+          <li><i>"No importa cuántas galaxias existan, encontrarte a ti fue mi mayor victoria."</i> 🪐💙</li>
           <li><i>"Somos hechos de polvo de estrellas, pero tú eres la que ilumina todo mi espacio."</i> ✨🖤</li>
         </ul>
       </div>
@@ -256,6 +310,12 @@
   <script src="https://www.youtube.com/iframe_api"></script>
 
   <script>
+    // Cambiar entre tarjetas
+    function siguienteTarjeta(num) {
+      document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
+      document.getElementById('card-' + num).classList.add('active');
+    }
+
     // Universo Canvas
     const canvas = document.getElementById('space-canvas');
     const ctx = canvas.getContext('2d');
@@ -394,8 +454,8 @@
       document.body.classList.add('universe-active');
       speedMultiplier = 3.5;
       
-      document.getElementById('question-screen').style.display = 'none';
-      document.getElementById('success-screen').style.display = 'block';
+      document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
+      document.getElementById('success-screen').classList.add('active');
 
       if (!isPlaying && player && player.playVideo) {
         toggleMusic();
