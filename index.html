@@ -384,7 +384,7 @@
       iniciarGalaxia3D();
     }
 
-    // MOTOR 3D CON STICKERS DE BUBU Y DUDU (.jpeg)
+    // MOTOR 3D CON STICKERS CIRCULARES DE BUBU Y DUDU (.jpeg)
     function iniciarGalaxia3D() {
       const container = document.getElementById('galaxy-container');
       
@@ -533,7 +533,7 @@
       scene.add(new THREE.AmbientLight(0x333333));
       scene.add(planetGroup);
 
-      // 4. FRASES AZULES + 8 STICKERS (.jpeg)
+      // 4. FRASES AZULES + 8 STICKERS CIRCULARES DE BUBU Y DUDU (.jpeg)
       const lista35Frases = [
         { texto: "TU LUZ EN MI UNIVERSO 🌌", icon: "🐻🐼💖" },
         { texto: "CONTIGO SIEMPRE 💙", icon: "🧸✨" },
@@ -561,9 +561,9 @@
         { texto: "CUIDARÉ DE TI 💙", icon: "🐻💖" },
         { texto: "ERES MÁGICA ✨", icon: "🐼🌻" },
         { texto: "MI MEJOR VICTORIA 🏆", icon: "🐻💙" },
-        { texto: "CORAZÓN AZUL 💙", icon: "🐼🖤" },
+        { texto: "CORAZÓN AZUL 💙", icon: "🖤✨" },
         { texto: "GIRASOLES PARA TI 🌻", icon: "🐻💙" },
-        { texto: "SMILE CRISTAL 😊", icon: "🐼💖" },
+        { texto: "SMILE CRISTAL 😊", icon: "💖✨" },
         { texto: "MI MUNDO 🪐", icon: "🐻🖤" },
         { texto: "INSEPARABLES 🤞", icon: "🐼💙" },
         { texto: "UN CIELO DE ESTRELLAS 🌟", icon: "🐻✨" },
@@ -574,7 +574,6 @@
 
       const canvasGroup = new THREE.Group();
       const spriteList = [];
-      const textureLoader = new THREE.TextureLoader();
 
       // Cargar las 35 frases
       lista35Frases.forEach((elem, idx) => {
@@ -627,10 +626,33 @@
         spriteList.push(sprite);
       });
 
-      // CARGAR LOS 8 STICKERS EN FORMATO .jpeg
+      // FUNCIÓN PARA CREAR IMÁGENES CIRCULARES CON CANVAS
       for (let k = 1; k <= 8; k++) {
-        const fileName = 'bubududu' + k + '.jpeg';
-        textureLoader.load(fileName, (texture) => {
+        const img = new Image();
+        img.src = 'bubududu' + k + '.jpeg';
+
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          const size = 256;
+          canvas.width = size;
+          canvas.height = size;
+
+          // Dibujar marco/fondo circular
+          ctx.beginPath();
+          ctx.arc(size / 2, size / 2, size / 2 - 6, 0, Math.PI * 2);
+          ctx.closePath();
+          ctx.clip(); // Recorte circular
+
+          // Dibujar la foto de Bubu/Dudu ajustada al círculo
+          ctx.drawImage(img, 0, 0, size, size);
+
+          // Borde neón circular
+          ctx.lineWidth = 12;
+          ctx.strokeStyle = k % 2 === 0 ? '#ec4899' : '#3b82f6';
+          ctx.stroke();
+
+          const texture = new THREE.CanvasTexture(canvas);
           const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true });
           const stickerSprite = new THREE.Sprite(spriteMat);
 
@@ -639,7 +661,7 @@
           const heightPos = (Math.random() - 0.5) * 5;
 
           stickerSprite.position.set(Math.cos(angle) * dist, heightPos, Math.sin(angle) * dist);
-          stickerSprite.scale.set(2.8, 2.8, 1);
+          stickerSprite.scale.set(2.8, 2.8, 1); // Tamaño circular
 
           stickerSprite.userData = {
             textoCompleto: "💖 Bubu & Dudu Sticker #" + k,
@@ -651,7 +673,7 @@
 
           canvasGroup.add(stickerSprite);
           spriteList.push(stickerSprite);
-        });
+        };
       }
 
       scene.add(canvasGroup);
