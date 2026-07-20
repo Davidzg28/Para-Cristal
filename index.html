@@ -9,7 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
   
-  <!-- Three.js y OrbitControls para Navegación Libre -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
@@ -60,7 +59,6 @@
       z-index: 10;
     }
 
-    /* Decoración de Girasoles en las tarjetas */
     .card-sunflower-top, .card-sunflower-bottom {
       position: absolute;
       font-size: 1.1rem;
@@ -71,7 +69,6 @@
     .card-sunflower-top { top: 12px; left: 15px; }
     .card-sunflower-bottom { bottom: 12px; right: 15px; }
 
-    /* ESTILO HERMOSO PARA EL FONDO DE LAS TARJETAS */
     .card {
       background: 
         radial-gradient(circle at 10% 10%, rgba(236, 72, 153, 0.22) 0%, transparent 45%),
@@ -92,7 +89,6 @@
       overflow: hidden;
     }
 
-    /* Destellos de luz suave en el fondo de la tarjeta */
     .card::before {
       content: "";
       position: absolute;
@@ -191,7 +187,6 @@
       right: 20px;
     }
 
-    /* Lienzo 3D de la Galaxia */
     #galaxy-container {
       position: fixed;
       top: 0;
@@ -218,7 +213,6 @@
       pointer-events: none;
     }
 
-    /* Modal emergente para leer frases al hacer clic */
     #phrase-modal {
       position: fixed;
       bottom: 40px;
@@ -253,15 +247,13 @@
 </head>
 <body>
 
-  <!-- Contenedor Galaxia 3D -->
   <div id="galaxy-container"></div>
-  <div id="galaxy-title">¡BOOYAH! 💙🖤<br><span style="font-size: 0.85rem; color: #cbd5e1; font-family: 'Outfit';">Usa tu dedo para navegar por el universo. Toca cualquier mensaje para leerlo ✨</span></div>
+  <div id="galaxy-title">¡BOOYAH! 💙🖤<br><span style="font-size: 0.85rem; color: #cbd5e1; font-family: 'Outfit';">Usa tu dedo para navegar por el universo. Toca cualquier sticker para leerlo ✨</span></div>
 
   <div id="phrase-modal">
     <div id="modal-text"></div>
   </div>
 
-  <!-- Botón de música de fondo -->
   <div class="music-player">
     <button id="music-btn" onclick="toggleMusic()">🎵 Poner Índigo 💙</button>
   </div>
@@ -270,7 +262,6 @@
 
   <main class="app-container" id="cards-wrapper">
     
-    <!-- TARJETA 1 -->
     <div id="card-1" class="card active">
       <div class="card-sunflower-top">🌻 💖 🌻</div>
       <div class="card-sunflower-bottom">🌻 💖 🌻</div>
@@ -282,7 +273,6 @@
       <button class="btn btn-next" onclick="siguienteTarjeta(2)">Siguiente ➡️</button>
     </div>
 
-    <!-- TARJETA 2 -->
     <div id="card-2" class="card">
       <div class="card-sunflower-top">🌻 💖 🌻</div>
       <div class="card-sunflower-bottom">🌻 💖 🌻</div>
@@ -294,7 +284,6 @@
       <button class="btn btn-next" onclick="siguienteTarjeta(3)">Siguiente ➡️</button>
     </div>
 
-    <!-- TARJETA 3 -->
     <div id="card-3" class="card">
       <div class="card-sunflower-top">🌻 💖 🌻</div>
       <div class="card-sunflower-bottom">🌻 💖 🌻</div>
@@ -307,7 +296,6 @@
       <button class="btn btn-next" onclick="siguienteTarjeta(4)">Ver pregunta final ✨</button>
     </div>
 
-    <!-- TARJETA 4 -->
     <div id="card-4" class="card">
       <div class="card-sunflower-top">🌻 💖 🌻</div>
       <div class="card-sunflower-bottom">🌻 💖 🌻</div>
@@ -348,7 +336,6 @@
       btnNo.style.top = randomY + 'px';
     }
 
-    // YouTube Audio
     let player;
     let isPlaying = false;
 
@@ -390,7 +377,7 @@
       iniciarGalaxia3D();
     }
 
-    // MOTOR 3D CON NAVEGACIÓN LIBRE Y LATIDO DE CORAZÓN 3D
+    // MOTOR 3D CON STICKERS TIERNO (BUBU Y DUDU) + FRASES AZULES
     function iniciarGalaxia3D() {
       const container = document.getElementById('galaxy-container');
       
@@ -403,14 +390,13 @@
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       container.appendChild(renderer.domElement);
 
-      // CONTROLES DE NAVEGACIÓN LIBRE (ORBIT CONTROLS)
       const controls = new THREE.OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
       controls.dampingFactor = 0.05;
       controls.maxDistance = 80;
       controls.minDistance = 5;
 
-      // 1. GALAXIA EN ESPIRAL DE FONDO
+      // 1. GALAXIA EN ESPIRAL
       const parameters = {
         count: 18000,
         size: 0.016,
@@ -466,7 +452,7 @@
       const galaxy = new THREE.Points(geometry, material);
       scene.add(galaxy);
 
-      // 2. CORAZÓN 3D DESDE EXPLOSIÓN CÓSMICA
+      // 2. CORAZÓN 3D
       const heartPointCount = 2000;
       const heartPositions = new Float32Array(heartPointCount * 3);
       const explosionVelocities = [];
@@ -540,43 +526,43 @@
       scene.add(new THREE.AmbientLight(0x333333));
       scene.add(planetGroup);
 
-      // 4. FRASES AZULES INTERACTIVAS
+      // 4. FRASES AZULES + CARITAS Y STICKERS TIERNO (ESTILO BUBU Y DUDU)
       const lista35Frases = [
-        { texto: "TU LUZ EN MI UNIVERSO 🌌", icon: "🌻💖" },
+        { texto: "TU LUZ EN MI UNIVERSO 🌌", icon: "🐻🐼💖" },
         { texto: "CONTIGO SIEMPRE 💙", icon: "🧸✨" },
-        { texto: "MI PERSONA FAVORITA 👑", icon: "🎀💙" },
-        { texto: "PROMESA ESTELAR ✨", icon: "🌟💫" },
-        { texto: "INFINITO AMOR 🪐", icon: "🌻💖" },
-        { texto: "CRISTAL Y YO 🖤💙", icon: "🌸💌" },
-        { texto: "MI DUO PERFECTO 🎮", icon: "🔥🏆" },
-        { texto: "ME ENCANTAS 💙", icon: "✨👑" },
-        { texto: "MI LUGAR SEGURO 🏰", icon: "🛡️💙" },
-        { texto: "JUNTOS EN CADA PARTIDA 🎯", icon: "🎮🖤" },
-        { texto: "MI SUEÑO CUMPLIDO 💫", icon: "🌌✨" },
-        { texto: "COINCIDIR CONTIGO 🌻", icon: "💛💙" },
-        { texto: "TE ADORO CRISTAL 👑", icon: "💖✨" },
-        { texto: "MI UNIVERSO ENTERO 🪐", icon: "🌌💙" },
-        { texto: "SIEMPRE A TU LADO 🤝", icon: "💙🖤" },
-        { texto: "LO MEJOR DE MIS DÍAS ☀️", icon: "🌻✨" },
-        { texto: "NUESTRA HISTORIA 📖", icon: "💙✨" },
-        { texto: "AMOR INFINITO ♾️", icon: "💖🌌" },
-        { texto: "BOOYAH JUNTOS 👑", icon: "🔥🎮" },
-        { texto: "SOPORTE Y COMPAÑERA 🛡️", icon: "💙👑" },
-        { texto: "MI ESTRELLA GUÍA 🌟", icon: "✨💙" },
-        { texto: "MI REINA 👸💙", icon: "👑🖤" },
-        { texto: "NUESTRO DESTINO 🌌", icon: "✨💫" },
-        { texto: "CUIDARÉ DE TI 💙", icon: "🛡️💖" },
-        { texto: "ERES MÁGICA ✨", icon: "🌌🌻" },
-        { texto: "MI MEJOR VICTORIA 🏆", icon: "🔥💙" },
-        { texto: "CORAZÓN AZUL 💙", icon: "🖤✨" },
-        { texto: "GIRASOLES PARA TI 🌻", icon: "💛💙" },
-        { texto: "SMILE CRISTAL 😊", icon: "💖✨" },
-        { texto: "MI MUNDO 🪐", icon: "🌌🖤" },
-        { texto: "INSEPARABLES 🤞", icon: "💙🖤" },
-        { texto: "UN CIELO DE ESTRELLAS 🌟", icon: "✨🌌" },
-        { texto: "SÓLO TÚ 👑", icon: "💖💙" },
-        { texto: "MI COMPAÑERA DE VIDA 🌹", icon: "💙🖤" },
-        { texto: "POR SIEMPRE ♾️", icon: "✨🌻" }
+        { texto: "MI PERSONA FAVORITA 👑", icon: "🐼💙" },
+        { texto: "PROMESA ESTELAR ✨", icon: "🐻💫" },
+        { texto: "INFINITO AMOR 🪐", icon: "🐼💖" },
+        { texto: "CRISTAL Y YO 🖤💙", icon: "🐻💌" },
+        { texto: "MI DUO PERFECTO 🎮", icon: "🐼🏆" },
+        { texto: "ME ENCANTAS 💙", icon: "🐻👑" },
+        { texto: "MI LUGAR SEGURO 🏰", icon: "🐼🛡️" },
+        { texto: "JUNTOS EN CADA PARTIDA 🎯", icon: "🐻🖤" },
+        { texto: "MI SUEÑO CUMPLIDO 💫", icon: "🐼✨" },
+        { texto: "COINCIDIR CONTIGO 🌻", icon: "🐻💛" },
+        { texto: "TE ADORO CRISTAL 👑", icon: "🐼💖" },
+        { texto: "MI UNIVERSO ENTERO 🪐", icon: "🐻🌌" },
+        { texto: "SIEMPRE A TU LADO 🤝", icon: "🐼🖤" },
+        { texto: "LO MEJOR DE MIS DÍAS ☀️", icon: "🐻🌻" },
+        { texto: "NUESTRA HISTORIA 📖", icon: "🐼✨" },
+        { texto: "AMOR INFINITO ♾️", icon: "🐻💖" },
+        { texto: "BOOYAH JUNTOS 👑", icon: "🐼🔥" },
+        { texto: "SOPORTE Y COMPAÑERA 🛡️", icon: "🐻👑" },
+        { texto: "MI ESTRELLA GUÍA 🌟", icon: "🐼💙" },
+        { texto: "MI REINA 👸💙", icon: "🐻🖤" },
+        { texto: "NUESTRO DESTINO 🌌", icon: "🐼✨" },
+        { texto: "CUIDARÉ DE TI 💙", icon: "🐻💖" },
+        { texto: "ERES MÁGICA ✨", icon: "🐼🌻" },
+        { texto: "MI MEJOR VICTORIA 🏆", icon: "🐻💙" },
+        { texto: "CORAZÓN AZUL 💙", icon: "🐼🖤" },
+        { texto: "GIRASOLES PARA TI 🌻", icon: "🐻💙" },
+        { texto: "SMILE CRISTAL 😊", icon: "🐼💖" },
+        { texto: "MI MUNDO 🪐", icon: "🐻🖤" },
+        { texto: "INSEPARABLES 🤞", icon: "🐼💙" },
+        { texto: "UN CIELO DE ESTRELLAS 🌟", icon: "🐻✨" },
+        { texto: "SÓLO TÚ 👑", icon: "🐼💙" },
+        { texto: "MI COMPAÑERA DE VIDA 🌹", icon: "🐻🖤" },
+        { texto: "POR SIEMPRE ♾️", icon: "🐼🌻" }
       ];
 
       const canvasGroup = new THREE.Group();
@@ -600,7 +586,7 @@
         ctx.fill();
         ctx.stroke();
 
-        ctx.font = '26px sans-serif';
+        ctx.font = '28px sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText(elem.icon, 170, 42);
 
@@ -634,7 +620,6 @@
 
       scene.add(canvasGroup);
 
-      // LEER FRASES CON UN CLIC/TOQUE
       const raycaster = new THREE.Raycaster();
       const mouse = new THREE.Vector2();
 
@@ -659,7 +644,6 @@
         }
       });
 
-      // ANIMACIÓN CONTINUA
       const clock = new THREE.Clock();
 
       function animate() {
