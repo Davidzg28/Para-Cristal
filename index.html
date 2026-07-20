@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Para Cristal 💙🖤 Girasoles</title>
+  <title>Para Cristal 💙🖤 Rose & Blue Universe</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
   
-  <!-- Carga de Three.js para gráficos 3D -->
+  <!-- Three.js para 3D -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
@@ -21,7 +21,7 @@
     }
 
     body {
-      background: #020208;
+      background: #03040c; /* Fondo Negro Azulado Noche */
       color: #ffffff;
       min-height: 100vh;
       display: flex;
@@ -41,14 +41,14 @@
 
     #music-btn {
       background: rgba(15, 23, 42, 0.9);
-      color: #60a5fa;
-      border: 1px solid #3b82f6;
+      color: #f472b6;
+      border: 1px solid #ec4899;
       padding: 10px 18px;
       border-radius: 25px;
       cursor: pointer;
       font-size: 0.85rem;
       font-weight: 600;
-      box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+      box-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
       backdrop-filter: blur(8px);
     }
 
@@ -61,20 +61,20 @@
 
     /* Decoración de Girasoles en las tarjetas */
     .card::before, .card::after {
-      content: "🌻 🌻 🌻";
+      content: "🌻 💖 🌻";
       position: absolute;
-      font-size: 1.2rem;
-      opacity: 0.7;
+      font-size: 1.1rem;
+      opacity: 0.8;
     }
-    .card::before { top: 10px; left: 15px; }
-    .card::after { bottom: 10px; right: 15px; }
+    .card::before { top: 12px; left: 15px; }
+    .card::after { bottom: 12px; right: 15px; }
 
     .card {
-      background: rgba(15, 23, 42, 0.88);
-      border: 2px solid #1e3a8a;
-      box-shadow: 0 0 30px rgba(59, 130, 246, 0.35);
+      background: linear-gradient(145deg, rgba(13, 22, 45, 0.92) 0%, rgba(20, 10, 30, 0.92) 100%);
+      border: 2px solid #ec4899;
+      box-shadow: 0 0 35px rgba(236, 72, 153, 0.35), inset 0 0 15px rgba(59, 130, 246, 0.2);
       backdrop-filter: blur(12px);
-      border-radius: 24px;
+      border-radius: 26px;
       padding: 35px 22px;
       text-align: center;
       position: relative;
@@ -86,44 +86,34 @@
       display: block;
     }
 
-    /* Estilo para las fotos dentro de las tarjetas */
     .card-img {
       width: 100%;
       max-height: 220px;
       object-fit: cover;
-      border-radius: 16px;
+      border-radius: 18px;
       margin-bottom: 18px;
-      border: 2px solid #3b82f6;
-      box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+      border: 2px solid #f472b6;
+      box-shadow: 0 0 18px rgba(244, 114, 182, 0.4);
     }
 
     .title-text {
-      color: #93c5fd;
-      font-size: 1.7rem;
+      background: linear-gradient(90deg, #93c5fd, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 1.8rem;
       margin-bottom: 15px;
       font-family: 'Playfair Display', serif;
-    }
-
-    .icon-box {
-      font-size: 3rem;
-      margin-bottom: 15px;
-      animation: float 3s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
     }
 
     .card-caption {
       font-size: 0.98rem;
       line-height: 1.6;
-      color: #cbd5e1;
+      color: #e2e8f0;
       margin-bottom: 22px;
-      background: rgba(0, 0, 0, 0.35);
-      padding: 15px;
-      border-radius: 14px;
-      border-left: 4px solid #3b82f6;
+      background: rgba(3, 7, 18, 0.55);
+      padding: 16px;
+      border-radius: 16px;
+      border-left: 4px solid #ec4899;
       text-align: left;
     }
 
@@ -146,16 +136,16 @@
     }
 
     .btn-next {
-      background: linear-gradient(90deg, #1e40af, #2563eb);
+      background: linear-gradient(90deg, #2563eb, #ec4899);
       color: white;
-      box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
+      box-shadow: 0 0 18px rgba(236, 72, 153, 0.4);
       width: 100%;
     }
 
     .btn-yes {
-      background: linear-gradient(90deg, #2563eb, #3b82f6);
+      background: linear-gradient(90deg, #ec4899, #3b82f6);
       color: white;
-      box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+      box-shadow: 0 0 20px rgba(236, 72, 153, 0.6);
     }
 
     .btn-no {
@@ -178,18 +168,45 @@
 
     #galaxy-title {
       position: fixed;
-      top: 25px;
+      top: 20px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 100;
-      color: #60a5fa;
-      font-size: 1.5rem;
+      color: #f472b6;
+      font-size: 1.4rem;
       font-family: 'Playfair Display', serif;
-      text-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+      text-shadow: 0 0 20px rgba(236, 72, 153, 0.8);
       display: none;
       text-align: center;
       width: 90%;
       pointer-events: none;
+    }
+
+    /* Modal emergente para leer frases al hacer clic */
+    #phrase-modal {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      background: rgba(13, 22, 45, 0.95);
+      border: 2px solid #ec4899;
+      box-shadow: 0 0 30px rgba(236, 72, 153, 0.6);
+      padding: 18px 24px;
+      border-radius: 20px;
+      color: #ffffff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-align: center;
+      display: none;
+      backdrop-filter: blur(10px);
+      max-width: 90%;
+      animation: popIn 0.3s ease-out;
+    }
+
+    @keyframes popIn {
+      from { transform: translate(-50%, 20px) scale(0.8); opacity: 0; }
+      to { transform: translate(-50%, 0) scale(1); opacity: 1; }
     }
 
     @keyframes fadeIn {
@@ -202,11 +219,15 @@
 
   <!-- Contenedor Galaxia 3D -->
   <div id="galaxy-container"></div>
-  <div id="galaxy-title">¡BOOYAH! 💙🖤<br><span style="font-size: 0.9rem; color: #cbd5e1; font-family: 'Outfit';">Explora nuestro universo juntos, Cristal ✨ (Gíralo con tu dedo)</span></div>
+  <div id="galaxy-title">¡BOOYAH! 💙💖🖤<br><span style="font-size: 0.85rem; color: #cbd5e1; font-family: 'Outfit';">Arrastra para explorar. Toca cualquier mensaje para leerlo ✨</span></div>
+
+  <div id="phrase-modal">
+    <div id="modal-text"></div>
+  </div>
 
   <!-- Botón de música de fondo -->
   <div class="music-player">
-    <button id="music-btn" onclick="toggleMusic()">🎵 Poner Índigo 💙</button>
+    <button id="music-btn" onclick="toggleMusic()">🎵 Poner Índigo 💙💖</button>
   </div>
 
   <div id="youtube-player"></div>
@@ -216,7 +237,7 @@
     <!-- TARJETA 1 -->
     <div id="card-1" class="card active">
       <img src="tarjeta1.jpeg" alt="Foto 1" class="card-img">
-      <h1 class="title-text">¡Hola, Cristal! 👋💙</h1>
+      <h1 class="title-text">¡Hola, Cristal! 👋💙💖</h1>
       <p class="card-caption">
         Hace un mes y medio coincidimos por primera vez jugando <b>Free Fire</b>. Lo que empezó como una simple partida terminó convirtiéndose en lo mejor de mis días...
       </p>
@@ -226,9 +247,9 @@
     <!-- TARJETA 2 -->
     <div id="card-2" class="card">
       <img src="tarjeta2.jpeg" alt="Foto 2" class="card-img">
-      <h1 class="title-text">Un detalle para ti 🌻💙</h1>
+      <h1 class="title-text">Un detalle para ti 🌻💖</h1>
       <p class="card-caption">
-        Sé que tus colores favoritos son el <b>azul y el negro</b>, y que te encantan los girasoles. Por eso preparé este espacio pensado en todo lo que te gusta.
+        Sé que te encantan los girasoles y el contraste entre el <b>azul y el negro</b> con toques de amor. Por eso preparé este espacio pensado especialmente en ti.
       </p>
       <button class="btn btn-next" onclick="siguienteTarjeta(3)">Siguiente ➡️</button>
     </div>
@@ -236,7 +257,7 @@
     <!-- TARJETA 3 -->
     <div id="card-3" class="card">
       <img src="tarjeta3.png" alt="Foto 3" class="card-img">
-      <h1 class="title-text">Coincidencia Divina 🌌</h1>
+      <h1 class="title-text">Coincidencia Divina 🌌💖</h1>
       <p class="card-caption">
         <i>"En un universo infinitamente grande, mi lugar favorito siempre será haber coincidido contigo."</i><br><br>
         Cada risa, cada charla y cada partida compartida contigo se han vuelto inigualables.
@@ -253,7 +274,7 @@
       </p>
       
       <div class="buttons-container" id="btn-box">
-        <button class="btn btn-yes" onclick="aceptar()">💙 ¡Sí, acepto!</button>
+        <button class="btn btn-yes" onclick="aceptar()">💙 ¡Sí, acepto! 💖</button>
         <button class="btn btn-no" id="btn-no" onmouseover="moverBoton()" onclick="moverBoton()">💔 No</button>
       </div>
     </div>
@@ -308,7 +329,7 @@
         if (player && player.pauseVideo) {
           player.pauseVideo();
           isPlaying = false;
-          btn.innerHTML = "🎵 Poner Índigo 💙";
+          btn.innerHTML = "🎵 Poner Índigo 💙💖";
         }
       }
     }
@@ -325,13 +346,13 @@
       iniciarGalaxia3D();
     }
 
-    // MOTOR 3D (THREE.JS) CON 35 FRASES ROTATORIAS
+    // MOTOR 3D CON NAVEGACIÓN Y PALETA DE ENAMORADOS (AZUL + ROSA + NEGRO)
     function iniciarGalaxia3D() {
       const container = document.getElementById('galaxy-container');
       
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-      camera.position.set(0, 18, 30);
+      camera.position.set(0, 18, 32);
       camera.lookAt(0, 0, 0);
 
       const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -339,16 +360,16 @@
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       container.appendChild(renderer.domElement);
 
-      // 1. PARTICULAS DE LA GALAXIA EN ESPIRAL
+      // 1. GALAXIA EN ESPIRAL (Degradado Azul Neón a Rosa Neón)
       const parameters = {
-        count: 15000,
-        size: 0.015,
-        radius: 16,
+        count: 18000,
+        size: 0.016,
+        radius: 18,
         branches: 4,
-        spin: 1,
-        randomness: 0.5,
-        insideColor: '#3b82f6',
-        outsideColor: '#93c5fd'
+        spin: 1.2,
+        randomness: 0.55,
+        insideColor: '#f472b6',  // Rosa amor en el centro
+        outsideColor: '#3b82f6'  // Azul brillante en las puntas
       };
 
       const geometry = new THREE.BufferGeometry();
@@ -395,7 +416,7 @@
       const galaxy = new THREE.Points(geometry, material);
       scene.add(galaxy);
 
-      // 2. CORAZÓN EN EL CENTRO
+      // 2. CORAZÓN RESPLANDECIENTE EN EL CENTRO
       const heartPoints = [];
       for (let t = 0; t < Math.PI * 2; t += 0.05) {
         const x = 16 * Math.pow(Math.sin(t), 3);
@@ -404,12 +425,12 @@
       }
 
       const heartGeo = new THREE.BufferGeometry().setFromPoints(heartPoints);
-      const heartMat = new THREE.PointsMaterial({ color: 0xec4899, size: 0.18, blending: THREE.AdditiveBlending });
+      const heartMat = new THREE.PointsMaterial({ color: 0xff2a85, size: 0.2, blending: THREE.AdditiveBlending });
       const heartMesh = new THREE.Points(heartGeo, heartMat);
       scene.add(heartMesh);
 
-      // 3. PLANETAS BONITOS
-      const planetColors = ['#60a5fa', '#fbbf24', '#f472b6', '#34d399', '#a78bfa'];
+      // 3. PLANETAS DE COLORES
+      const planetColors = ['#f472b6', '#60a5fa', '#fbbf24', '#ec4899', '#38bdf8'];
       const planetGroup = new THREE.Group();
 
       for (let i = 0; i < 5; i++) {
@@ -417,10 +438,10 @@
         const planetMat = new THREE.MeshPhongMaterial({
           color: planetColors[i],
           emissive: planetColors[i],
-          emissiveIntensity: 0.2,
-          shininess: 30,
+          emissiveIntensity: 0.3,
+          shininess: 40,
           transparent: true,
-          opacity: 0.9
+          opacity: 0.95
         });
         const planet = new THREE.Mesh(planetGeo, planetMat);
 
@@ -431,13 +452,13 @@
         planetGroup.add(planet);
       }
       
-      const light = new THREE.PointLight(0xffffff, 1, 50);
+      const light = new THREE.PointLight(0xffffff, 1.2, 50);
       light.position.set(0, 5, 0);
       scene.add(light);
-      scene.add(new THREE.AmbientLight(0x222222));
+      scene.add(new THREE.AmbientLight(0x333333));
       scene.add(planetGroup);
 
-      // 4. LISTA DE 35 PALABRAS Y FRASES ROMÁNTICAS
+      // 4. FRASES INTERACTIVAS CON RAYCASTER PARA NAVEGAR Y LEER
       const lista35Frases = [
         { texto: "TU LUZ EN MI UNIVERSO 🌌", icon: "🌻💖" },
         { texto: "CONTIGO SIEMPRE 💙", icon: "🧸✨" },
@@ -477,6 +498,7 @@
       ];
 
       const canvasGroup = new THREE.Group();
+      const spriteList = [];
 
       lista35Frases.forEach((elem, idx) => {
         const canvas = document.createElement('canvas');
@@ -484,8 +506,13 @@
         canvas.width = 340;
         canvas.height = 100;
 
-        ctx.fillStyle = 'rgba(15, 23, 42, 0.82)';
-        ctx.strokeStyle = '#3b82f6';
+        // Fondo con degradado Rosa a Azul Neón
+        const grad = ctx.createLinearGradient(0, 0, 340, 100);
+        grad.addColorStop(0, 'rgba(236, 72, 153, 0.85)');
+        grad.addColorStop(1, 'rgba(15, 23, 42, 0.9)');
+
+        ctx.fillStyle = grad;
+        ctx.strokeStyle = '#ec4899';
         ctx.lineWidth = 3;
         ctx.beginPath();
         ctx.roundRect(10, 10, 320, 80, 20);
@@ -496,7 +523,7 @@
         ctx.textAlign = 'center';
         ctx.fillText(elem.icon, 170, 42);
 
-        ctx.fillStyle = '#60a5fa';
+        ctx.fillStyle = '#ffffff';
         ctx.font = 'Bold 14px sans-serif';
         ctx.fillText(elem.texto, 170, 72);
 
@@ -504,17 +531,16 @@
         const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true });
         const sprite = new THREE.Sprite(spriteMat);
 
-        // Distribuir las 35 frases en varias capas/órbitas
         const layer = idx % 5; 
         const angle = (idx / (lista35Frases.length / 5)) * Math.PI * 2;
-        const dist = 8 + layer * 2.2; 
+        const dist = 8.5 + layer * 2.2; 
         const heightPos = (Math.random() - 0.5) * 6;
 
         sprite.position.set(Math.cos(angle) * dist, heightPos, Math.sin(angle) * dist);
         sprite.scale.set(3.6, 1.15, 1);
 
-        // Guardar datos de órbita individual para que cada frase gire
         sprite.userData = {
+          textoCompleto: elem.icon + " " + elem.texto,
           angle: angle,
           distance: dist,
           height: heightPos,
@@ -522,45 +548,80 @@
         };
 
         canvasGroup.add(sprite);
+        spriteList.push(sprite);
       });
 
       scene.add(canvasGroup);
 
-      // CONTROLES INTERACTIVOS (GIRAR CON DEDO / MOUSE)
+      // CONTROLES DE NAVEGACIÓN LIBRE Y ZOOM EN EL UNIVERSO
       let isDragging = false;
       let previousMousePosition = { x: 0, y: 0 };
+      const raycaster = new THREE.Raycaster();
+      const mouse = new THREE.Vector2();
 
-      window.addEventListener('pointerdown', () => { isDragging = true; });
-      window.addEventListener('pointerup', () => { isDragging = false; });
+      window.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        previousMousePosition = { x: e.clientX, y: e.clientY };
+      });
+
+      window.addEventListener('pointerup', (e) => {
+        isDragging = false;
+      });
+
       window.addEventListener('pointermove', (e) => {
         if (isDragging) {
           const deltaX = e.clientX - previousMousePosition.x;
           const deltaY = e.clientY - previousMousePosition.y;
 
-          galaxy.rotation.y += deltaX * 0.005;
-          canvasGroup.rotation.y += deltaX * 0.005;
-          planetGroup.rotation.y += deltaX * 0.005;
-          galaxy.rotation.x += deltaY * 0.005;
+          galaxy.rotation.y += deltaX * 0.004;
+          canvasGroup.rotation.y += deltaX * 0.004;
+          planetGroup.rotation.y += deltaX * 0.004;
+          galaxy.rotation.x += deltaY * 0.003;
 
-          heartMesh.rotation.y += deltaX * 0.005;
+          heartMesh.rotation.y += deltaX * 0.004;
+          previousMousePosition = { x: e.clientX, y: e.clientY };
         }
-        previousMousePosition = { x: e.clientX, y: e.clientY };
       });
 
-      // ANIMACIÓN CONTINUA: ROTACIÓN DE GALAXIA, PLANETAS Y FRASES
+      // Zoom con la rueda del ratón
+      window.addEventListener('wheel', (e) => {
+        camera.position.z += e.deltaY * 0.02;
+        camera.position.z = Math.max(10, Math.min(60, camera.position.z));
+      });
+
+      // AL TOCAR/HACER CLIC EN UNA FRASE: MOSTRAR EN MODAL PARA LEER
+      window.addEventListener('click', (e) => {
+        mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects(spriteList);
+
+        if (intersects.length > 0) {
+          const spriteTocado = intersects[0].object;
+          const modal = document.getElementById('phrase-modal');
+          const modalText = document.getElementById('modal-text');
+
+          modalText.innerText = spriteTocado.userData.textoCompleto;
+          modal.style.display = 'block';
+
+          setTimeout(() => {
+            modal.style.display = 'none';
+          }, 3500);
+        }
+      });
+
+      // ANIMACIÓN CONTINUA
       const clock = new THREE.Clock();
 
       function animate() {
         const elapsedTime = clock.getElapsedTime();
 
-        // Rotación general de la galaxia
-        galaxy.rotation.y = elapsedTime * 0.04;
+        galaxy.rotation.y = elapsedTime * 0.035;
         
-        // Latido del corazón
         heartMesh.rotation.y = elapsedTime * 0.1;
         heartMesh.scale.setScalar(1 + Math.sin(elapsedTime * 3) * 0.08); 
 
-        // Rotación de los planetas
         planetGroup.children.forEach(planet => {
           if (planet.userData.angle !== undefined) {
             planet.userData.angle += planet.userData.speed;
@@ -570,7 +631,6 @@
           }
         });
 
-        // Rotación de CADA UNA de las 35 frases orbitando en el universo
         canvasGroup.children.forEach(sprite => {
           if (sprite.userData.angle !== undefined) {
             sprite.userData.angle += sprite.userData.speed;
