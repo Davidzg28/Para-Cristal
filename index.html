@@ -1,1 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para Cristal 💙🖤 | ¿Quieres ser mi novia?</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Outfit', sans-serif;
+    }
 
+    body {
+      background: linear-gradient(135deg, #0a0a12 0%, #0d1b2a 50%, #101827 100%);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .music-player {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      z-index: 1000;
+    }
+
+    #music-btn {
+      background: rgba(15, 23, 42, 0.9);
+      color: #60a5fa;
+      border: 1px solid #3b82f6;
+      padding: 10px 18px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+      backdrop-filter: blur(8px);
+    }
+
+    .app-container {
+      max-width: 450px;
+      width: 100%;
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 2px solid #1e3a8a;
+      box-shadow: 0 0 25px rgba(59, 130, 246, 0.3);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .title-text {
+      color: #93c5fd;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .game-icon {
+      font-size: 3.5rem;
+      margin-bottom: 15px;
+    }
+
+    .card-caption {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #cbd5e1;
+      margin-bottom: 25px;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 15px;
+      border-radius: 12px;
+      border-left: 3px solid #3b82f6;
+      text-align: left;
+    }
+
+    .buttons-container {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      position: relative;
+      min-height: 50px;
+    }
+
+    .btn {
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+    }
+
+    .btn-yes {
+      background: linear-gradient(90deg, #2563eb, #3b82f6);
+      color: white;
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+    }
+
+    .btn-no {
+      background: #334155;
+      color: #94a3b8;
+      position: absolute;
+      right: 20px;
+    }
+
+    #success-screen {
+      display: none;
+    }
+
+    .success-title {
+      color: #60a5fa;
+      font-size: 2.2rem;
+      margin-bottom: 15px;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .success-subtitle {
+      color: #e2e8f0;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Reproductor de Música (Índigo - Camilo) -->
+  <div class="music-player">
+    <button id="music-btn" onclick="toggleMusic()">🎵 Poner Índigo 💙</button>
+    <audio id="bg-music" loop>
+      <source src="https://ia801503.us.archive.org/15/items/indigo-camilo-evaluna/Indigo.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <main class="app-container">
+    
+    <!-- PANTALLA PRINCIPAL -->
+    <div id="question-screen" class="card">
+      <h1 class="title-text">¿Quieres ser mi novia, Cristal? 💙🖤</h1>
+      
+      <div class="game-icon">🎮✨</div>
+
+      <p class="card-caption">
+        Desde que nos conocimos en <b>Free Fire</b> hace un mes y medio, las partidas y mis días se volvieron mucho mejores. Quien diría que en un juego me encontraría a alguien tan especial como tú... ¡Me encantas! 💙
+      </p>
+      
+      <div class="buttons-container" id="btn-box">
+        <button class="btn btn-yes" onclick="aceptar()">💙 ¡Sí, acepto!</button>
+        <button class="btn btn-no" id="btn-no" onmouseover="moverBoton()" onclick="moverBoton()">💔 No</button>
+      </div>
+    </div>
+
+    <!-- PANTALLA DE ÉXITO -->
+    <div id="success-screen" class="card">
+      <h1 class="success-title">¡BOOYAH! 🎉💙🖤</h1>
+      <p class="success-subtitle">
+        ¡Hicimos el mejor dúo! Prometo cuidar mucho de ti y hacerte muy feliz todos los días, Cristal. 👑🔥
+      </p>
+    </div>
+
+  </main>
+
+  <script>
+    function toggleMusic() {
+      const audio = document.getElementById('bg-music');
+      const btn = document.getElementById('music-btn');
+      if (audio.paused) {
+        audio.play();
+        btn.innerHTML = "⏸️ Pausar música";
+      } else {
+        audio.pause();
+        btn.innerHTML = "🎵 Poner Índigo 💙";
+      }
+    }
+
+    function moverBoton() {
+      const btnNo = document.getElementById('btn-no');
+      const box = document.getElementById('btn-box');
+      
+      const maxX = box.clientWidth - btnNo.clientWidth - 20;
+      const maxY = 150;
+
+      const randomX = Math.floor(Math.random() * maxX);
+      const randomY = Math.floor(Math.random() * maxY) - 50;
+
+      btnNo.style.position = 'absolute';
+      btnNo.style.left = randomX + 'px';
+      btnNo.style.top = randomY + 'px';
+    }
+
+    function aceptar() {
+      document.getElementById('question-screen').style.display = 'none';
+      document.getElementById('success-screen').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
