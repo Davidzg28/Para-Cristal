@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Para Cristal 💙🖤 Rose & Blue Universe</title>
+  <title>Para Cristal 💙🖤 David & Cristal Universe</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +33,7 @@
       position: relative;
     }
 
-    /* Fondo animado de universo para toda la pantalla inicial */
+    /* Canvas de fondo para el universo de las tarjetas */
     #bg-stars-canvas {
       position: fixed;
       top: 0;
@@ -81,7 +81,7 @@
     .card-sunflower-top { top: 12px; left: 15px; }
     .card-sunflower-bottom { bottom: 12px; right: 15px; }
 
-    /* ESTILO DE TARJETAS CON UNIVERSO DE FONDO EN VIVO */
+    /* ESTILO DE TARJETAS CON UNIVERSO DE FONDO */
     .card {
       background: 
         radial-gradient(circle at 20% 20%, rgba(236, 72, 153, 0.35) 0%, transparent 40%),
@@ -110,7 +110,6 @@
       100% { background-position: 0% 100%; }
     }
 
-    /* Brillo de destellos estelares dentro de la tarjeta */
     .card::before {
       content: "";
       position: absolute;
@@ -278,12 +277,12 @@
 </head>
 <body>
 
-  <!-- Canvas de fondo para el universo animado de las tarjetas -->
+  <!-- Canvas de fondo para el universo animado -->
   <canvas id="bg-stars-canvas"></canvas>
 
   <!-- Contenedor Galaxia 3D -->
   <div id="galaxy-container"></div>
-  <div id="galaxy-title">¡BOOYAH! 💙🖤<br><span style="font-size: 0.85rem; color: #cbd5e1; font-family: 'Outfit';">Usa tu dedo para navegar por el universo. Toca cualquier mensaje o sticker para leerlo ✨</span></div>
+  <div id="galaxy-title">¡BOOYAH! 💙🖤<br><span style="font-size: 0.85rem; color: #cbd5e1; font-family: 'Outfit';">David & Cristal ✨ Usa tu dedo para navegar por nuestro universo</span></div>
 
   <div id="phrase-modal">
     <div id="modal-text"></div>
@@ -306,7 +305,7 @@
       <h1 class="title-text">Un Nuevo Capítulo 💙💖</h1>
       <p class="card-caption" id="cover-caption-text" style="text-align: center; font-size: 1.05rem;">
         ¡Hola, Cristal! 👋<br><br>
-        ¿Estás lista para comenzar a leer un nuevo capítulo juntos? 📖✨
+        ¿Estás lista para comenzar a leer un nuevo capítulo juntos con David? 📖✨
       </p>
       
       <div class="buttons-container" id="cover-btn-box" style="flex-direction: column; align-items: center; gap: 12px; min-height: 100px;">
@@ -334,7 +333,7 @@
       <img src="tarjeta2.jpeg" alt="Foto 2" class="card-img">
       <h1 class="title-text">Un detalle para ti 🌻💖</h1>
       <p class="card-caption">
-        Sé que te encantan los girasoles y el contraste entre el <b>azul y el negro</b> con toques de amor. Por eso preparé este espacio pensado especialmente en ti.
+        Sé que te encantan los girasoles y el contraste entre el <b>azul y el negro</b> con toques de amor. Por eso David preparó este espacio pensado especialmente en ti.
       </p>
       <button class="btn btn-next" onclick="siguienteTarjeta(3)">Siguiente ➡️</button>
     </div>
@@ -359,7 +358,7 @@
       <img src="tarjeta4.jpeg" alt="Foto 4" class="card-img">
       <h1 class="title-text">Tengo una pregunta... 💍💙</h1>
       <p class="card-caption" style="text-align: center; font-size: 1.1rem; font-weight: 600;">
-        ¿Quieres dar el siguiente paso y ser mi novia, Cristal?
+        ¿Quieres dar el siguiente paso y ser la novia de David, Cristal?
       </p>
       
       <div class="buttons-container" id="btn-box">
@@ -373,7 +372,7 @@
   <script src="https://www.youtube.com/iframe_api"></script>
 
   <script>
-    // ANIMACIÓN DE FONDO DE UNIVERSO INTERACTIVO PARA LAS TARJETAS
+    // ANIMACIÓN DE FONDO DE UNIVERSO
     const bgCanvas = document.getElementById('bg-stars-canvas');
     const bgCtx = bgCanvas.getContext('2d');
     let bgWidth, bgHeight;
@@ -421,7 +420,7 @@
     const coverMessages = [
       "¿Estás segura que no? 🥺💙",
       "¡Piénsalo bien, Cristal! 🥺✨",
-      "¿De verdad no quieres ver lo que preparé con tanto cariño? 💔",
+      "¿De verdad no quieres ver lo que David preparó para ti? 💔",
       "¡Oye! ¡Di que sí por favor! 🥺💙",
       "¡Ya no hay opción de decir que no! 😉✨"
     ];
@@ -517,7 +516,7 @@
       iniciarGalaxia3D();
     }
 
-    // MOTOR 3D CON GALAXIA SUPERIOR, LLUVIA DE METEORITOS Y STICKERS CIRCULARES
+    // MOTOR 3D CON FRASE "TÚ Y YO" EN GRANDE + FRASES DE DAVID Y CRISTAL
     function iniciarGalaxia3D() {
       const container = document.getElementById('galaxy-container');
       
@@ -592,7 +591,7 @@
       const galaxy = new THREE.Points(geometry, material);
       scene.add(galaxy);
 
-      // 1B. SEGUNDA GALAXIA (ARRIBA EN EL FONDO)
+      // 1B. SEGUNDA GALAXIA (ARRIBA)
       const secondGalaxyGeo = new THREE.BufferGeometry();
       const secondGalaxyCount = 5000;
       const secondGalaxyPositions = new Float32Array(secondGalaxyCount * 3);
@@ -632,7 +631,7 @@
       secondGalaxy.position.set(14, 14, -18);
       scene.add(secondGalaxy);
 
-      // 1C. LLUVIA DE METEORITOS (ARRIBA Y ABAJO)
+      // 1C. METEORITOS
       const meteorGroup = new THREE.Group();
       const meteors = [];
       const meteorCount = 14;
@@ -715,7 +714,42 @@
       const heartMesh = new THREE.Points(heartGeo, heartMat);
       scene.add(heartMesh);
 
-      // 3. PLANETAS BONITOS
+      // 2B. CARTEL GIGANTE CENTRAL: "TÚ Y YO 💙🖤"
+      const bigCanvas = document.createElement('canvas');
+      const bigCtx = bigCanvas.getContext('2d');
+      bigCanvas.width = 600;
+      bigCanvas.height = 180;
+
+      const bigGrad = bigCtx.createLinearGradient(0, 0, 600, 180);
+      bigGrad.addColorStop(0, 'rgba(30, 58, 138, 0.95)');
+      bigGrad.addColorStop(0.5, 'rgba(236, 72, 153, 0.95)');
+      bigGrad.addColorStop(1, 'rgba(15, 23, 42, 0.95)');
+
+      bigCtx.fillStyle = bigGrad;
+      bigCtx.strokeStyle = '#60a5fa';
+      bigCtx.lineWidth = 6;
+      bigCtx.beginPath();
+      bigCtx.roundRect(15, 15, 570, 150, 30);
+      bigCtx.fill();
+      bigCtx.stroke();
+
+      bigCtx.fillStyle = '#ffffff';
+      bigCtx.font = 'Bold 55px sans-serif';
+      bigCtx.textAlign = 'center';
+      bigCtx.shadowColor = '#60a5fa';
+      bigCtx.shadowBlur = 20;
+      bigCtx.fillText("TÚ Y YO 💙🖤", 300, 105);
+
+      const bigTexture = new THREE.CanvasTexture(bigCanvas);
+      const bigSpriteMat = new THREE.SpriteMaterial({ map: bigTexture, transparent: true });
+      const bigSprite = new THREE.Sprite(bigSpriteMat);
+      
+      // Posición central destacada justo arriba del corazón
+      bigSprite.position.set(0, 7.5, 0);
+      bigSprite.scale.set(7.5, 2.25, 1);
+      scene.add(bigSprite);
+
+      // 3. PLANETAS
       const planetColors = ['#f472b6', '#60a5fa', '#fbbf24', '#ec4899', '#38bdf8'];
       const planetGroup = new THREE.Group();
 
@@ -744,14 +778,14 @@
       scene.add(new THREE.AmbientLight(0x333333));
       scene.add(planetGroup);
 
-      // 4. FRASES AZULES + 8 STICKERS CIRCULARES DE BUBU Y DUDU (.jpeg)
+      // 4. FRASES AZULES (PERSONALIZADAS CON DAVID Y CRISTAL) + STICKERS CIRCULARES
       const lista35Frases = [
         { texto: "TU LUZ EN MI UNIVERSO 🌌", icon: "🐻🐼💖" },
-        { texto: "CONTIGO SIEMPRE 💙", icon: "🧸✨" },
+        { texto: "DAVID Y CRISTAL 💙", icon: "🧸✨" },
         { texto: "MI PERSONA FAVORITA 👑", icon: "🐼💙" },
         { texto: "PROMESA ESTELAR ✨", icon: "🐻💫" },
         { texto: "INFINITO AMOR 🪐", icon: "🐼💖" },
-        { texto: "CRISTAL Y YO 🖤💙", icon: "🐻💌" },
+        { texto: "CRISTAL Y DAVID 🖤💙", icon: "🐻💌" },
         { texto: "MI DUO PERFECTO 🎮", icon: "🐼🏆" },
         { texto: "ME ENCANTAS 💙", icon: "🐻👑" },
         { texto: "MI LUGAR SEGURO 🏰", icon: "🐼🛡️" },
@@ -859,8 +893,8 @@
           ctx.stroke();
 
           const texture = new THREE.CanvasTexture(canvas);
-          const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true });
-          const stickerSprite = new THREE.Sprite(spriteMat);
+          const stickerSpriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true });
+          const stickerSprite = new THREE.Sprite(stickerSpriteMat);
 
           const angle = (k / 8) * Math.PI * 2;
           const dist = 6 + (k % 3) * 2;
@@ -949,6 +983,9 @@
         heartMesh.rotation.y = elapsedTime * 0.12; 
         const heartBeatScale = 1 + Math.sin(elapsedTime * 4.5) * 0.12; 
         heartMesh.scale.set(heartBeatScale, heartBeatScale, heartBeatScale);
+
+        // Balanceo leve del letrero "TÚ Y YO"
+        bigSprite.position.y = 7.5 + Math.sin(elapsedTime * 2) * 0.3;
 
         planetGroup.children.forEach(planet => {
           if (planet.userData.angle !== undefined) {
