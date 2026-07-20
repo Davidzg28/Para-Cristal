@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Para Cristal 💙🖤 | ¿Quieres ser mi novia?</title>
+  <title>Para Cristal 💙🖤</title>
   
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
@@ -30,7 +29,7 @@
       position: relative;
     }
 
-    /* Fondo de Universo Interactivo */
+    /* Fondo de Universo / Espacio Canvas */
     #space-canvas {
       position: fixed;
       top: 0;
@@ -38,12 +37,12 @@
       width: 100%;
       height: 100%;
       z-index: 1;
-      opacity: 0.3;
+      opacity: 0.35;
       transition: opacity 2s ease;
     }
 
     body.universe-active #space-canvas {
-      opacity: 1; /* El universo se vuelve brillante e intenso al aceptar */
+      opacity: 1;
     }
 
     .music-player {
@@ -74,12 +73,12 @@
     }
 
     .card {
-      background: rgba(15, 23, 42, 0.85);
+      background: rgba(15, 23, 42, 0.88);
       border: 2px solid #1e3a8a;
-      box-shadow: 0 0 25px rgba(59, 130, 246, 0.3);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 30px 20px;
+      box-shadow: 0 0 30px rgba(59, 130, 246, 0.35);
+      backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 35px 22px;
       text-align: center;
       position: relative;
     }
@@ -87,24 +86,30 @@
     .title-text {
       color: #93c5fd;
       font-size: 1.8rem;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       font-family: 'Playfair Display', serif;
     }
 
     .game-icon {
       font-size: 3.5rem;
       margin-bottom: 15px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
 
     .card-caption {
-      font-size: 1rem;
+      font-size: 0.98rem;
       line-height: 1.6;
       color: #cbd5e1;
       margin-bottom: 25px;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 15px;
-      border-radius: 12px;
-      border-left: 3px solid #3b82f6;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 16px;
+      border-radius: 14px;
+      border-left: 4px solid #3b82f6;
       text-align: left;
     }
 
@@ -113,7 +118,7 @@
       justify-content: center;
       gap: 15px;
       position: relative;
-      min-height: 50px;
+      min-height: 55px;
     }
 
     .btn {
@@ -123,12 +128,18 @@
       border: none;
       border-radius: 25px;
       cursor: pointer;
+      transition: all 0.2s ease;
     }
 
     .btn-yes {
       background: linear-gradient(90deg, #2563eb, #3b82f6);
       color: white;
       box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+    }
+
+    .btn-yes:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 22px rgba(59, 130, 246, 0.8);
     }
 
     .btn-no {
@@ -140,7 +151,7 @@
 
     #success-screen {
       display: none;
-      animation: fadeIn 1.5s ease-in-out;
+      animation: fadeIn 1.2s ease-in-out;
     }
 
     .success-title {
@@ -158,15 +169,14 @@
       margin-bottom: 20px;
     }
 
-    /* Caja para las frases del universo */
     .universe-phrases {
-      background: rgba(10, 15, 30, 0.6);
+      background: rgba(10, 15, 30, 0.65);
       border: 1px solid rgba(59, 130, 246, 0.4);
-      border-radius: 12px;
-      padding: 15px;
+      border-radius: 14px;
+      padding: 18px;
       text-align: left;
       font-size: 0.92rem;
-      line-height: 1.6;
+      line-height: 1.65;
       color: #93c5fd;
     }
 
@@ -176,9 +186,9 @@
     }
 
     .universe-phrases li {
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       position: relative;
-      padding-left: 20px;
+      padding-left: 22px;
     }
 
     .universe-phrases li::before {
@@ -195,10 +205,10 @@
 </head>
 <body>
 
-  <!-- Lienzo de Canvas para el Universo / Galaxia -->
+  <!-- Universo de fondo Canvas -->
   <canvas id="space-canvas"></canvas>
 
-  <!-- Reproductor de Música (YouTube - Índigo de Camilo) -->
+  <!-- Botón de música de fondo -->
   <div class="music-player">
     <button id="music-btn" onclick="toggleMusic()">🎵 Poner Índigo 💙</button>
   </div>
@@ -223,7 +233,7 @@
       </div>
     </div>
 
-    <!-- PANTALLA DE ÉXITO CON UNIVERSO Y FRASES -->
+    <!-- PANTALLA DE ÉXITO -->
     <div id="success-screen" class="card">
       <h1 class="success-title">¡BOOYAH! 🎉💙🖤</h1>
       
@@ -242,11 +252,11 @@
 
   </main>
 
-  <!-- YouTube API -->
+  <!-- YouTube API para reproducción de audio -->
   <script src="https://www.youtube.com/iframe_api"></script>
 
   <script>
-    // Configuración del Universo de Fondo
+    // Universo Canvas
     const canvas = document.getElementById('space-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -258,12 +268,11 @@
       height = canvas.height = window.innerHeight;
     });
 
-    // Crear Estrellas y Planetas/Munditos
     const stars = [];
     const planets = [];
     let speedMultiplier = 1;
 
-    for (let i = 0; i < 150; i++) {
+    for (let i = 0; i < 160; i++) {
       stars.push({
         x: Math.random() * width - width / 2,
         y: Math.random() * height - height / 2,
@@ -272,13 +281,12 @@
       });
     }
 
-    // Definir 4 planetas/mundos giratorios con colores azul y negro/violeta
     const planetColors = ['#3b82f6', '#60a5fa', '#1e3a8a', '#93c5fd'];
     for (let i = 0; i < 4; i++) {
       planets.push({
         x: (Math.random() - 0.5) * width * 0.8,
         y: (Math.random() - 0.5) * height * 0.8,
-        radius: 12 + Math.random() * 20,
+        radius: 12 + Math.random() * 18,
         color: planetColors[i],
         angle: Math.random() * Math.PI * 2,
         orbitSpeed: 0.005 + Math.random() * 0.01,
@@ -293,7 +301,6 @@
       const cx = width / 2;
       const cy = height / 2;
 
-      // Dibujar y mover Estrellas en efecto Túnel
       ctx.fillStyle = '#ffffff';
       for (let star of stars) {
         star.z -= 0.5 * speedMultiplier;
@@ -311,13 +318,11 @@
         }
       }
 
-      // Dibujar y orbitar Mundos/Planetas
       for (let planet of planets) {
         planet.angle += planet.orbitSpeed * speedMultiplier;
         const px = cx + Math.cos(planet.angle) * planet.distance;
         const py = cy + Math.sin(planet.angle) * (planet.distance * 0.5);
 
-        // Brillo del planeta
         ctx.shadowBlur = 15;
         ctx.shadowColor = planet.color;
 
@@ -326,14 +331,13 @@
         ctx.arc(px, py, planet.radius, 0, Math.PI * 2);
         ctx.fill();
 
-        // Anillos para algunos mundos
         ctx.strokeStyle = 'rgba(147, 197, 253, 0.4)';
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.ellipse(px, py, planet.radius * 1.8, planet.radius * 0.5, 0.3, 0, Math.PI * 2);
         ctx.stroke();
 
-        ctx.shadowBlur = 0; // reset
+        ctx.shadowBlur = 0;
       }
 
       requestAnimationFrame(drawSpace);
@@ -341,7 +345,7 @@
 
     drawSpace();
 
-    // YouTube Audio
+    // Reproductor YouTube API
     let player;
     let isPlaying = false;
 
@@ -388,12 +392,11 @@
 
     function aceptar() {
       document.body.classList.add('universe-active');
-      speedMultiplier = 3.5; // Aumenta la velocidad del movimiento del universo
+      speedMultiplier = 3.5;
       
       document.getElementById('question-screen').style.display = 'none';
       document.getElementById('success-screen').style.display = 'block';
 
-      // Si la música no ha iniciado, la intenta iniciar al presionar Sí
       if (!isPlaying && player && player.playVideo) {
         toggleMusic();
       }
