@@ -384,7 +384,7 @@
       iniciarGalaxia3D();
     }
 
-    // MOTOR 3D CON STICKERS CIRCULARES DE BUBU Y DUDU (.jpeg)
+    // MOTOR 3D CON GALAXIA SUPERIOR, LLUVIA DE METEORITOS Y STICKERS CIRCULARES
     function iniciarGalaxia3D() {
       const container = document.getElementById('galaxy-container');
       
@@ -403,7 +403,7 @@
       controls.maxDistance = 80;
       controls.minDistance = 5;
 
-      // 1. GALAXIA EN ESPIRAL
+      // 1. GALAXIA EN ESPIRAL PRINCIPAL
       const parameters = {
         count: 18000,
         size: 0.016,
@@ -458,6 +458,84 @@
 
       const galaxy = new THREE.Points(geometry, material);
       scene.add(galaxy);
+
+      // 1B. SEGUNDA GALAXIA (ARRIBA EN EL FONDO)
+      const secondGalaxyGeo = new THREE.BufferGeometry();
+      const secondGalaxyCount = 5000;
+      const secondGalaxyPositions = new Float32Array(secondGalaxyCount * 3);
+      const secondGalaxyColors = new Float32Array(secondGalaxyCount * 3);
+
+      const secondInner = new THREE.Color('#ff66b2');
+      const secondOuter = new THREE.Color('#38bdf8');
+
+      for (let i = 0; i < secondGalaxyCount; i++) {
+        const r = Math.random() * 6;
+        const theta = r * 2.8 + ((i % 2) * Math.PI); // Dos brazos
+        const x = Math.cos(theta) * r + (Math.random() - 0.5) * 0.5 * r;
+        const z = Math.sin(theta) * r + (Math.random() - 0.5) * 0.5 * r;
+        const y = (Math.random() - 0.5) * 0.5 * r;
+
+        secondGalaxyPositions[i * 3] = x;
+        secondGalaxyPositions[i * 3 + 1] = y;
+        secondGalaxyPositions[i * 3 + 2] = z;
+
+        const mixed = secondInner.clone().lerp(secondOuter, r / 6);
+        secondGalaxyColors[i * 3] = mixed.r;
+        secondGalaxyColors[i * 3 + 1] = mixed.g;
+        secondGalaxyColors[i * 3 + 2] = mixed.b;
+      }
+      secondGalaxyGeo.setAttribute('position', new THREE.BufferAttribute(secondGalaxyPositions, 3));
+      secondGalaxyGeo.setAttribute('color', new THREE.BufferAttribute(secondGalaxyColors, 3));
+
+      const secondGalaxyMat = new THREE.PointsMaterial({
+        size: 0.015,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.75,
+        blending: THREE.AdditiveBlending
+      });
+
+      const secondGalaxy = new THREE.Points(secondGalaxyGeo, secondGalaxyMat);
+      secondGalaxy.position.set(14, 14, -18); // Posicionada arriba
+      scene.add(secondGalaxy);
+
+      // 1C. LLUVIA DE METEORITOS (ARRIBA Y ABAJO)
+      const meteorGroup = new THREE.Group();
+      const meteors = [];
+      const meteorCount = 14;
+
+      for (let i = 0; i < meteorCount; i++) {
+        const points = [
+          new THREE.Vector3(0, 0, 0),
+          new THREE.Vector3(2.0, -1.0, 0.6) // Dirección diagonal de la estela
+        ];
+        const meteorGeo = new THREE.BufferGeometry().setFromPoints(points);
+        const meteorMat = new THREE.LineBasicMaterial({
+          color: Math.random() > 0.5 ? 0x60a5fa : 0xf472b6,
+          transparent: true,
+          opacity: 0.8,
+          blending: THREE.AdditiveBlending
+        });
+        const line = new THREE.Line(meteorGeo, meteorMat);
+
+        const isAbove = Math.random() > 0.5;
+        const x = (Math.random() - 0.5) * 35;
+        const y = isAbove ? (8 + Math.random() * 8) : (-8 - Math.random() * 8);
+        const z = (Math.random() - 0.5) * 25;
+
+        line.position.set(x, y, z);
+
+        meteors.push({
+          mesh: line,
+          speedX: -0.22 - Math.random() * 0.28,
+          speedY: 0.11 + Math.random() * 0.14,
+          speedZ: (Math.random() - 0.5) * 0.08,
+          isAbove: isAbove
+        });
+
+        meteorGroup.add(line);
+      }
+      scene.add(meteorGroup);
 
       // 2. CORAZÓN 3D
       const heartPointCount = 2000;
@@ -561,9 +639,9 @@
         { texto: "CUIDARÉ DE TI 💙", icon: "🐻💖" },
         { texto: "ERES MÁGICA ✨", icon: "🐼🌻" },
         { texto: "MI MEJOR VICTORIA 🏆", icon: "🐻💙" },
-        { texto: "CORAZÓN AZUL 💙", icon: "🖤✨" },
+        { texto: "CORAZÓN AZUL 💙", icon: "🐼🖤" },
         { texto: "GIRASOLES PARA TI 🌻", icon: "🐻💙" },
-        { texto: "SMILE CRISTAL 😊", icon: "💖✨" },
+        { texto: "SMILE CRISTAL 😊", icon: "🐼💖" },
         { texto: "MI MUNDO 🪐", icon: "🐻🖤" },
         { texto: "INSEPARABLES 🤞", icon: "🐼💙" },
         { texto: "UN CIELO DE ESTRELLAS 🌟", icon: "🐻✨" },
@@ -574,6 +652,7 @@
 
       const canvasGroup = new THREE.Group();
       const spriteList = [];
+      const textureLoader = new THREE.TextureLoader();
 
       // Cargar las 35 frases
       lista35Frases.forEach((elem, idx) => {
@@ -626,7 +705,7 @@
         spriteList.push(sprite);
       });
 
-      // FUNCIÓN PARA CREAR IMÁGENES CIRCULARES CON CANVAS
+      // CARGAR LOS 8 STICKERS CIRCULARES DE BUBU Y DUDU (.jpeg)
       for (let k = 1; k <= 8; k++) {
         const img = new Image();
         img.src = 'bubududu' + k + '.jpeg';
@@ -638,13 +717,13 @@
           canvas.width = size;
           canvas.height = size;
 
-          // Dibujar marco/fondo circular
+          // Dibujar recorte circular
           ctx.beginPath();
           ctx.arc(size / 2, size / 2, size / 2 - 6, 0, Math.PI * 2);
           ctx.closePath();
-          ctx.clip(); // Recorte circular
+          ctx.clip(); 
 
-          // Dibujar la foto de Bubu/Dudu ajustada al círculo
+          // Dibujar la foto de Bubu/Dudu
           ctx.drawImage(img, 0, 0, size, size);
 
           // Borde neón circular
@@ -661,7 +740,7 @@
           const heightPos = (Math.random() - 0.5) * 5;
 
           stickerSprite.position.set(Math.cos(angle) * dist, heightPos, Math.sin(angle) * dist);
-          stickerSprite.scale.set(2.8, 2.8, 1); // Tamaño circular
+          stickerSprite.scale.set(2.8, 2.8, 1); 
 
           stickerSprite.userData = {
             textoCompleto: "💖 Bubu & Dudu Sticker #" + k,
@@ -709,8 +788,25 @@
 
         controls.update();
 
+        // Rotación de la galaxia principal
         galaxy.rotation.y = elapsedTime * 0.035;
+
+        // Rotación de la segunda galaxia (arriba)
+        secondGalaxy.rotation.y = elapsedTime * 0.06;
         
+        // Animación de los meteoritos (estrellas fugaces) arriba y abajo
+        meteors.forEach(m => {
+          m.mesh.position.x += m.speedX;
+          m.mesh.position.y += m.speedY;
+          m.mesh.position.z += m.speedZ;
+
+          // Si sale de los límites lógicos, reiniciamos la trayectoria
+          if (m.mesh.position.x < -30 || Math.abs(m.mesh.position.y) > 22) {
+            m.mesh.position.set(25 + Math.random() * 10, m.isAbove ? (8 + Math.random() * 8) : (-8 - Math.random() * 8), (Math.random() - 0.5) * 20);
+          }
+        });
+        
+        // Explosión y atracción hacia la forma del Corazón
         const currentPositions = heartGeo.attributes.position.array;
         for (let i = 0; i < heartPointCount; i++) {
           const idx = i * 3;
@@ -729,6 +825,7 @@
         }
         heartGeo.attributes.position.needsUpdate = true;
 
+        // Rotación y Latido del Corazón 3D
         heartMesh.rotation.y = elapsedTime * 0.12; 
         const heartBeatScale = 1 + Math.sin(elapsedTime * 4.5) * 0.12; 
         heartMesh.scale.set(heartBeatScale, heartBeatScale, heartBeatScale);
