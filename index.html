@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
   
+  <!-- Three.js y OrbitControls para Navegación Libre -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
@@ -247,13 +248,15 @@
 </head>
 <body>
 
+  <!-- Contenedor Galaxia 3D -->
   <div id="galaxy-container"></div>
-  <div id="galaxy-title">¡BOOYAH! 💙🖤<br><span style="font-size: 0.85rem; color: #cbd5e1; font-family: 'Outfit';">Usa tu dedo para navegar por el universo. Toca cualquier sticker para leerlo ✨</span></div>
+  <div id="galaxy-title">¡BOOYAH! 💙🖤<br><span style="font-size: 0.85rem; color: #cbd5e1; font-family: 'Outfit';">Usa tu dedo para navegar por el universo. Toca cualquier mensaje o sticker para leerlo ✨</span></div>
 
   <div id="phrase-modal">
     <div id="modal-text"></div>
   </div>
 
+  <!-- Botón de música de fondo -->
   <div class="music-player">
     <button id="music-btn" onclick="toggleMusic()">🎵 Poner Índigo 💙</button>
   </div>
@@ -262,6 +265,7 @@
 
   <main class="app-container" id="cards-wrapper">
     
+    <!-- TARJETA 1 -->
     <div id="card-1" class="card active">
       <div class="card-sunflower-top">🌻 💖 🌻</div>
       <div class="card-sunflower-bottom">🌻 💖 🌻</div>
@@ -273,6 +277,7 @@
       <button class="btn btn-next" onclick="siguienteTarjeta(2)">Siguiente ➡️</button>
     </div>
 
+    <!-- TARJETA 2 -->
     <div id="card-2" class="card">
       <div class="card-sunflower-top">🌻 💖 🌻</div>
       <div class="card-sunflower-bottom">🌻 💖 🌻</div>
@@ -284,6 +289,7 @@
       <button class="btn btn-next" onclick="siguienteTarjeta(3)">Siguiente ➡️</button>
     </div>
 
+    <!-- TARJETA 3 -->
     <div id="card-3" class="card">
       <div class="card-sunflower-top">🌻 💖 🌻</div>
       <div class="card-sunflower-bottom">🌻 💖 🌻</div>
@@ -296,6 +302,7 @@
       <button class="btn btn-next" onclick="siguienteTarjeta(4)">Ver pregunta final ✨</button>
     </div>
 
+    <!-- TARJETA 4 -->
     <div id="card-4" class="card">
       <div class="card-sunflower-top">🌻 💖 🌻</div>
       <div class="card-sunflower-bottom">🌻 💖 🌻</div>
@@ -377,7 +384,7 @@
       iniciarGalaxia3D();
     }
 
-    // MOTOR 3D CON STICKERS TIERNO (BUBU Y DUDU) + FRASES AZULES
+    // MOTOR 3D CON STICKERS DE BUBU Y DUDU (.jpeg)
     function iniciarGalaxia3D() {
       const container = document.getElementById('galaxy-container');
       
@@ -526,7 +533,7 @@
       scene.add(new THREE.AmbientLight(0x333333));
       scene.add(planetGroup);
 
-      // 4. FRASES AZULES + CARITAS Y STICKERS TIERNO (ESTILO BUBU Y DUDU)
+      // 4. FRASES AZULES + 8 STICKERS (.jpeg)
       const lista35Frases = [
         { texto: "TU LUZ EN MI UNIVERSO 🌌", icon: "🐻🐼💖" },
         { texto: "CONTIGO SIEMPRE 💙", icon: "🧸✨" },
@@ -567,7 +574,9 @@
 
       const canvasGroup = new THREE.Group();
       const spriteList = [];
+      const textureLoader = new THREE.TextureLoader();
 
+      // Cargar las 35 frases
       lista35Frases.forEach((elem, idx) => {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
@@ -586,7 +595,7 @@
         ctx.fill();
         ctx.stroke();
 
-        ctx.font = '28px sans-serif';
+        ctx.font = '26px sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText(elem.icon, 170, 42);
 
@@ -617,6 +626,33 @@
         canvasGroup.add(sprite);
         spriteList.push(sprite);
       });
+
+      // CARGAR LOS 8 STICKERS EN FORMATO .jpeg
+      for (let k = 1; k <= 8; k++) {
+        const fileName = 'bubududu' + k + '.jpeg';
+        textureLoader.load(fileName, (texture) => {
+          const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true });
+          const stickerSprite = new THREE.Sprite(spriteMat);
+
+          const angle = (k / 8) * Math.PI * 2;
+          const dist = 6 + (k % 3) * 2;
+          const heightPos = (Math.random() - 0.5) * 5;
+
+          stickerSprite.position.set(Math.cos(angle) * dist, heightPos, Math.sin(angle) * dist);
+          stickerSprite.scale.set(2.8, 2.8, 1);
+
+          stickerSprite.userData = {
+            textoCompleto: "💖 Bubu & Dudu Sticker #" + k,
+            angle: angle,
+            distance: dist,
+            height: heightPos,
+            speed: 0.003 + Math.random() * 0.002
+          };
+
+          canvasGroup.add(stickerSprite);
+          spriteList.push(stickerSprite);
+        });
+      }
 
       scene.add(canvasGroup);
 
