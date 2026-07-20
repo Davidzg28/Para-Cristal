@@ -9,8 +9,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
   
-  <!-- Three.js para 3D -->
+  <!-- Three.js y OrbitControls para Navegación Libre -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
   <style>
     * {
@@ -219,7 +220,7 @@
 
   <!-- Contenedor Galaxia 3D -->
   <div id="galaxy-container"></div>
-  <div id="galaxy-title">¡BOOYAH! 💙🖤<br><span style="font-size: 0.85rem; color: #cbd5e1; font-family: 'Outfit';">Arrastra para explorar. Toca cualquier mensaje azul para leerlo ✨</span></div>
+  <div id="galaxy-title">¡BOOYAH! 💙🖤<br><span style="font-size: 0.85rem; color: #cbd5e1; font-family: 'Outfit';">Usa tu dedo para navegar por el universo. Toca cualquier mensaje para leerlo ✨</span></div>
 
   <div id="phrase-modal">
     <div id="modal-text"></div>
@@ -346,19 +347,25 @@
       iniciarGalaxia3D();
     }
 
-    // MOTOR 3D CON EXPLOSIÓN CÓSMICA, FORMACIÓN DE CORAZÓN 3D Y PALABRAS AZULES
+    // MOTOR 3D CON NAVEGACIÓN LIBRE Y LATIDO DE CORAZÓN 3D
     function iniciarGalaxia3D() {
       const container = document.getElementById('galaxy-container');
       
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
       camera.position.set(0, 18, 32);
-      camera.lookAt(0, 0, 0);
 
       const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       container.appendChild(renderer.domElement);
+
+      // CONTROLES DE NAVEGACIÓN LIBRE (ORBIT CONTROLS)
+      const controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.maxDistance = 80;
+      controls.minDistance = 5;
 
       // 1. GALAXIA EN ESPIRAL DE FONDO
       const parameters = {
@@ -416,14 +423,13 @@
       const galaxy = new THREE.Points(geometry, material);
       scene.add(galaxy);
 
-      // 2. EXPLOSIÓN CÓSMICA QUE FORMA EL CORAZÓN 3D
+      // 2. CORAZÓN 3D DESDE EXPLOSIÓN CÓSMICA
       const heartPointCount = 2000;
       const heartPositions = new Float32Array(heartPointCount * 3);
       const explosionVelocities = [];
       const targetHeartPositions = [];
 
       for (let i = 0; i < heartPointCount; i++) {
-        // Cálculo de forma de Corazón 3D perfecto
         const u = Math.random() * Math.PI * 2;
         const v = Math.random() * Math.PI - Math.PI / 2;
 
@@ -437,12 +443,10 @@
 
         targetHeartPositions.push({ x: tx, y: ty, z: tz });
 
-        // Posición inicial en el origen para la explosión
         heartPositions[i * 3] = 0;
         heartPositions[i * 3 + 1] = 2;
         heartPositions[i * 3 + 2] = 0;
 
-        // Dirección de la explosión del cosmos
         explosionVelocities.push({
           x: (Math.random() - 0.5) * 25,
           y: (Math.random() - 0.5) * 25,
@@ -464,7 +468,7 @@
       const heartMesh = new THREE.Points(heartGeo, heartMat);
       scene.add(heartMesh);
 
-      // 3. PLANETAS DE COLORES
+      // 3. PLANETAS BONITOS
       const planetColors = ['#f472b6', '#60a5fa', '#fbbf24', '#ec4899', '#38bdf8'];
       const planetGroup = new THREE.Group();
 
@@ -541,7 +545,6 @@
         canvas.width = 340;
         canvas.height = 100;
 
-        // Fondo azul neón con estética nocturna
         const grad = ctx.createLinearGradient(0, 0, 340, 100);
         grad.addColorStop(0, 'rgba(15, 23, 42, 0.92)');
         grad.addColorStop(1, 'rgba(30, 58, 138, 0.85)');
@@ -558,7 +561,6 @@
         ctx.textAlign = 'center';
         ctx.fillText(elem.icon, 170, 42);
 
-        // Texto Azul Neón
         ctx.fillStyle = '#60a5fa';
         ctx.font = 'Bold 14px sans-serif';
         ctx.fillText(elem.texto, 170, 72);
@@ -589,42 +591,10 @@
 
       scene.add(canvasGroup);
 
-      // CONTROLES DE NAVEGACIÓN Y ZOOM
-      let isDragging = false;
-      let previousMousePosition = { x: 0, y: 0 };
+      // LEER FRASES CON UN CLIC/TOQUE
       const raycaster = new THREE.Raycaster();
       const mouse = new THREE.Vector2();
 
-      window.addEventListener('pointerdown', (e) => {
-        isDragging = true;
-        previousMousePosition = { x: e.clientX, y: e.clientY };
-      });
-
-      window.addEventListener('pointerup', (e) => {
-        isDragging = false;
-      });
-
-      window.addEventListener('pointermove', (e) => {
-        if (isDragging) {
-          const deltaX = e.clientX - previousMousePosition.x;
-          const deltaY = e.clientY - previousMousePosition.y;
-
-          galaxy.rotation.y += deltaX * 0.004;
-          canvasGroup.rotation.y += deltaX * 0.004;
-          planetGroup.rotation.y += deltaX * 0.004;
-          galaxy.rotation.x += deltaY * 0.003;
-
-          heartMesh.rotation.y += deltaX * 0.004;
-          previousMousePosition = { x: e.clientX, y: e.clientY };
-        }
-      });
-
-      window.addEventListener('wheel', (e) => {
-        camera.position.z += e.deltaY * 0.02;
-        camera.position.z = Math.max(10, Math.min(60, camera.position.z));
-      });
-
-      // MODAL AL HACER CLIC EN LAS FRASES
       window.addEventListener('click', (e) => {
         mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
@@ -646,30 +616,29 @@
         }
       });
 
-      // ANIMACIÓN CONTINUA CON EXPLOSIÓN Y ROTACIÓN LENTA DEL CORAZÓN 3D
+      // ANIMACIÓN CONTINUA (INCLUYE EL LATIDO DEL CORAZÓN)
       const clock = new THREE.Clock();
 
       function animate() {
         const elapsedTime = clock.getElapsedTime();
 
-        // Rotación general de la galaxia
+        controls.update();
+
+        // Rotación de la galaxia
         galaxy.rotation.y = elapsedTime * 0.035;
         
-        // Animación de Explosión del Cosmos y Formación del Corazón 3D
+        // Explosión y atracción hacia la forma del Corazón
         const currentPositions = heartGeo.attributes.position.array;
-        
         for (let i = 0; i < heartPointCount; i++) {
           const idx = i * 3;
           const target = targetHeartPositions[i];
           const vel = explosionVelocities[i];
 
           if (elapsedTime < 1.2) {
-            // Fase 1: Explosión inicial del cosmos
             currentPositions[idx] += vel.x * 0.012;
             currentPositions[idx + 1] += vel.y * 0.012;
             currentPositions[idx + 2] += vel.z * 0.012;
           } else {
-            // Fase 2: Mapeo y atracción suave hacia el Corazón 3D
             currentPositions[idx] += (target.x - currentPositions[idx]) * 0.04;
             currentPositions[idx + 1] += (target.y - currentPositions[idx + 1]) * 0.04;
             currentPositions[idx + 2] += (target.z - currentPositions[idx + 2]) * 0.04;
@@ -677,10 +646,12 @@
         }
         heartGeo.attributes.position.needsUpdate = true;
 
-        // Rotación LENTA del Corazón 3D sobre su propio eje
+        // Rotación LENTA y LATIDO RÍTMICO DEL CORAZÓN 3D (Efecto Pulse)
         heartMesh.rotation.y = elapsedTime * 0.12; 
+        const heartBeatScale = 1 + Math.sin(elapsedTime * 4.5) * 0.12; 
+        heartMesh.scale.set(heartBeatScale, heartBeatScale, heartBeatScale);
 
-        // Rotación de los planetas
+        // Rotación de planetas
         planetGroup.children.forEach(planet => {
           if (planet.userData.angle !== undefined) {
             planet.userData.angle += planet.userData.speed;
@@ -690,7 +661,7 @@
           }
         });
 
-        // Rotación de las frases azules
+        // Rotación de frases
         canvasGroup.children.forEach(sprite => {
           if (sprite.userData.angle !== undefined) {
             sprite.userData.angle += sprite.userData.speed;
