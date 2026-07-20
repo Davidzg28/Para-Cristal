@@ -265,8 +265,21 @@
 
   <main class="app-container" id="cards-wrapper">
     
+    <!-- PORTADA / ENTRADA -->
+    <div id="card-0" class="card active">
+      <div class="card-sunflower-top">🌻 💖 🌻</div>
+      <div class="card-sunflower-bottom">🌻 💖 🌻</div>
+      <div style="font-size: 4rem; margin-bottom: 15px; animation: ambientGlow 3s infinite alternate;">📖✨</div>
+      <h1 class="title-text">Un Nuevo Capítulo 💙💖</h1>
+      <p class="card-caption" style="text-align: center; font-size: 1.05rem;">
+        ¡Hola, Cristal! 👋<br><br>
+        ¿Estás lista para comenzar a leer un nuevo capítulo juntos? 📖✨
+      </p>
+      <button class="btn btn-next" onclick="empezarCapitulo()">✨ ¡Sí, empecemos! ✨</button>
+    </div>
+
     <!-- TARJETA 1 -->
-    <div id="card-1" class="card active">
+    <div id="card-1" class="card">
       <div class="card-sunflower-top">🌻 💖 🌻</div>
       <div class="card-sunflower-bottom">🌻 💖 🌻</div>
       <img src="tarjeta1.jpeg" alt="Foto 1" class="card-img">
@@ -323,6 +336,13 @@
   <script src="https://www.youtube.com/iframe_api"></script>
 
   <script>
+    function empezarCapitulo() {
+      if (!isPlaying && player && player.playVideo) {
+        toggleMusic();
+      }
+      siguienteTarjeta(1);
+    }
+
     function siguienteTarjeta(num) {
       document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
       document.getElementById('card-' + num).classList.add('active');
@@ -470,7 +490,7 @@
 
       for (let i = 0; i < secondGalaxyCount; i++) {
         const r = Math.random() * 6;
-        const theta = r * 2.8 + ((i % 2) * Math.PI); // Dos brazos
+        const theta = r * 2.8 + ((i % 2) * Math.PI);
         const x = Math.cos(theta) * r + (Math.random() - 0.5) * 0.5 * r;
         const z = Math.sin(theta) * r + (Math.random() - 0.5) * 0.5 * r;
         const y = (Math.random() - 0.5) * 0.5 * r;
@@ -496,7 +516,7 @@
       });
 
       const secondGalaxy = new THREE.Points(secondGalaxyGeo, secondGalaxyMat);
-      secondGalaxy.position.set(14, 14, -18); // Posicionada arriba
+      secondGalaxy.position.set(14, 14, -18);
       scene.add(secondGalaxy);
 
       // 1C. LLUVIA DE METEORITOS (ARRIBA Y ABAJO)
@@ -507,7 +527,7 @@
       for (let i = 0; i < meteorCount; i++) {
         const points = [
           new THREE.Vector3(0, 0, 0),
-          new THREE.Vector3(2.0, -1.0, 0.6) // Dirección diagonal de la estela
+          new THREE.Vector3(2.0, -1.0, 0.6)
         ];
         const meteorGeo = new THREE.BufferGeometry().setFromPoints(points);
         const meteorMat = new THREE.LineBasicMaterial({
@@ -631,7 +651,7 @@
         { texto: "LO MEJOR DE MIS DÍAS ☀️", icon: "🐻🌻" },
         { texto: "NUESTRA HISTORIA 📖", icon: "🐼✨" },
         { texto: "AMOR INFINITO ♾️", icon: "🐻💖" },
-        { texto: "BOOYAH JUNTOS 👑", icon: "🐼🔥" },
+        { texto: "BOOYAH JUNTOS 👑", icon: "🔥🎮" },
         { texto: "SOPORTE Y COMPAÑERA 🛡️", icon: "🐻👑" },
         { texto: "MI ESTRELLA GUÍA 🌟", icon: "🐼💙" },
         { texto: "MI REINA 👸💙", icon: "🐻🖤" },
@@ -641,7 +661,7 @@
         { texto: "MI MEJOR VICTORIA 🏆", icon: "🐻💙" },
         { texto: "CORAZÓN AZUL 💙", icon: "🐼🖤" },
         { texto: "GIRASOLES PARA TI 🌻", icon: "🐻💙" },
-        { texto: "SMILE CRISTAL 😊", icon: "🐼💖" },
+        { texto: "SMILE CRISTAL 😊", icon: "💖✨" },
         { texto: "MI MUNDO 🪐", icon: "🐻🖤" },
         { texto: "INSEPARABLES 🤞", icon: "🐼💙" },
         { texto: "UN CIELO DE ESTRELLAS 🌟", icon: "🐻✨" },
@@ -654,7 +674,6 @@
       const spriteList = [];
       const textureLoader = new THREE.TextureLoader();
 
-      // Cargar las 35 frases
       lista35Frases.forEach((elem, idx) => {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
@@ -705,7 +724,6 @@
         spriteList.push(sprite);
       });
 
-      // CARGAR LOS 8 STICKERS CIRCULARES DE BUBU Y DUDU (.jpeg)
       for (let k = 1; k <= 8; k++) {
         const img = new Image();
         img.src = 'bubududu' + k + '.jpeg';
@@ -717,16 +735,13 @@
           canvas.width = size;
           canvas.height = size;
 
-          // Dibujar recorte circular
           ctx.beginPath();
           ctx.arc(size / 2, size / 2, size / 2 - 6, 0, Math.PI * 2);
           ctx.closePath();
           ctx.clip(); 
 
-          // Dibujar la foto de Bubu/Dudu
           ctx.drawImage(img, 0, 0, size, size);
 
-          // Borde neón circular
           ctx.lineWidth = 12;
           ctx.strokeStyle = k % 2 === 0 ? '#ec4899' : '#3b82f6';
           ctx.stroke();
@@ -788,25 +803,19 @@
 
         controls.update();
 
-        // Rotación de la galaxia principal
         galaxy.rotation.y = elapsedTime * 0.035;
-
-        // Rotación de la segunda galaxia (arriba)
         secondGalaxy.rotation.y = elapsedTime * 0.06;
         
-        // Animación de los meteoritos (estrellas fugaces) arriba y abajo
         meteors.forEach(m => {
           m.mesh.position.x += m.speedX;
           m.mesh.position.y += m.speedY;
           m.mesh.position.z += m.speedZ;
 
-          // Si sale de los límites lógicos, reiniciamos la trayectoria
           if (m.mesh.position.x < -30 || Math.abs(m.mesh.position.y) > 22) {
             m.mesh.position.set(25 + Math.random() * 10, m.isAbove ? (8 + Math.random() * 8) : (-8 - Math.random() * 8), (Math.random() - 0.5) * 20);
           }
         });
         
-        // Explosión y atracción hacia la forma del Corazón
         const currentPositions = heartGeo.attributes.position.array;
         for (let i = 0; i < heartPointCount; i++) {
           const idx = i * 3;
@@ -825,7 +834,6 @@
         }
         heartGeo.attributes.position.needsUpdate = true;
 
-        // Rotación y Latido del Corazón 3D
         heartMesh.rotation.y = elapsedTime * 0.12; 
         const heartBeatScale = 1 + Math.sin(elapsedTime * 4.5) * 0.12; 
         heartMesh.scale.set(heartBeatScale, heartBeatScale, heartBeatScale);
