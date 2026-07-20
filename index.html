@@ -32,7 +32,6 @@
       position: relative;
     }
 
-    /* Reproductor de música */
     .music-player {
       position: fixed;
       top: 15px;
@@ -66,7 +65,7 @@
       box-shadow: 0 0 30px rgba(59, 130, 246, 0.35);
       backdrop-filter: blur(12px);
       border-radius: 24px;
-      padding: 35px 22px;
+      padding: 25px 22px;
       text-align: center;
       position: relative;
       display: none;
@@ -77,24 +76,26 @@
       display: block;
     }
 
-    .card-step {
-      color: #60a5fa;
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 10px;
+    /* Estilo para las fotos dentro de las tarjetas */
+    .card-img {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      border-radius: 16px;
+      margin-bottom: 18px;
+      border: 2px solid #3b82f6;
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
     }
 
     .title-text {
       color: #93c5fd;
-      font-size: 1.8rem;
-      margin-bottom: 18px;
+      font-size: 1.7rem;
+      margin-bottom: 15px;
       font-family: 'Playfair Display', serif;
     }
 
     .icon-box {
-      font-size: 3.5rem;
+      font-size: 3rem;
       margin-bottom: 15px;
       animation: float 3s ease-in-out infinite;
     }
@@ -108,9 +109,9 @@
       font-size: 0.98rem;
       line-height: 1.6;
       color: #cbd5e1;
-      margin-bottom: 25px;
+      margin-bottom: 22px;
       background: rgba(0, 0, 0, 0.35);
-      padding: 16px;
+      padding: 15px;
       border-radius: 14px;
       border-left: 4px solid #3b82f6;
       text-align: left;
@@ -204,9 +205,8 @@
     
     <!-- TARJETA 1 -->
     <div id="card-1" class="card active">
-      <div class="card-step">Tarjeta 1 de 4</div>
+      <img src="tarjeta1.jpeg" alt="Foto 1" class="card-img">
       <h1 class="title-text">¡Hola, Cristal! 👋💙</h1>
-      <div class="icon-box">🎮✨</div>
       <p class="card-caption">
         Hace un mes y medio coincidimos por primera vez jugando <b>Free Fire</b>. Lo que empezó como una simple partida terminó convirtiéndose en lo mejor de mis días...
       </p>
@@ -215,9 +215,8 @@
 
     <!-- TARJETA 2 -->
     <div id="card-2" class="card">
-      <div class="card-step">Tarjeta 2 de 4</div>
+      <img src="tarjeta2.jpeg" alt="Foto 2" class="card-img">
       <h1 class="title-text">Un detalle para ti 💙🖤</h1>
-      <div class="icon-box">🎨👑</div>
       <p class="card-caption">
         Sé que tus colores favoritos son el <b>azul y el negro</b>, por eso preparé este espacio pensado en tus gustos para decirte lo especial que eres para mí.
       </p>
@@ -226,9 +225,8 @@
 
     <!-- TARJETA 3 -->
     <div id="card-3" class="card">
-      <div class="card-step">Tarjeta 3 de 4</div>
+      <img src="tarjeta3.jpeg" alt="Foto 3" class="card-img">
       <h1 class="title-text">Coincidencia Divina 🌌</h1>
-      <div class="icon-box">🪐✨</div>
       <p class="card-caption">
         <i>"En un universo infinitamente grande, mi lugar favorito siempre será haber coincidido contigo."</i><br><br>
         Cada risa, cada charla y cada partida compartida contigo se han vuelto inigualables.
@@ -238,9 +236,8 @@
 
     <!-- TARJETA 4 (PREGUNTA FINAL) -->
     <div id="card-4" class="card">
-      <div class="card-step">Última tarjeta</div>
-      <h1 class="title-text">Tengo una pregunta... 💙🖤</h1>
       <div class="icon-box">💍🔥</div>
+      <h1 class="title-text">Tengo una pregunta... 💙🖤</h1>
       <p class="card-caption" style="text-align: center; font-size: 1.1rem; font-weight: 600;">
         ¿Quieres dar el siguiente paso y ser mi novia, Cristal?
       </p>
@@ -421,7 +418,6 @@
         canvas.width = 320;
         canvas.height = 100;
 
-        // Fondo de la burbuja estilo sticker
         ctx.fillStyle = 'rgba(15, 23, 42, 0.8)';
         ctx.strokeStyle = '#3b82f6';
         ctx.lineWidth = 3;
@@ -430,12 +426,10 @@
         ctx.fill();
         ctx.stroke();
 
-        // Icono / Figurita
         ctx.font = '28px sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText(elem.icon, 160, 42);
 
-        // Texto bonito
         ctx.fillStyle = '#60a5fa';
         ctx.font = 'Bold 15px sans-serif';
         ctx.fillText(elem.texto, 160, 72);
@@ -454,7 +448,7 @@
 
       scene.add(canvasGroup);
 
-      // CONTROLES INTERACTIVOS (GIRAR CON DEDO / MOUSE)
+      // CONTROLES INTERACTIVOS
       let isDragging = false;
       let previousMousePosition = { x: 0, y: 0 };
 
@@ -474,7 +468,7 @@
         previousMousePosition = { x: e.clientX, y: e.clientY };
       });
 
-      // ANIMACIÓN CONTINUA DE LA GALAXIA Y BURBUJAS
+      // ANIMACIÓN CONTINUA
       const clock = new THREE.Clock();
 
       function animate() {
@@ -483,7 +477,7 @@
         galaxy.rotation.y = elapsedTime * 0.05;
         canvasGroup.rotation.y = elapsedTime * 0.035;
         heartMesh.rotation.y = elapsedTime * 0.1;
-        heartMesh.scale.setScalar(1 + Math.sin(elapsedTime * 3) * 0.08); // Latido del corazón
+        heartMesh.scale.setScalar(1 + Math.sin(elapsedTime * 3) * 0.08);
 
         renderer.render(scene, camera);
         requestAnimationFrame(animate);
