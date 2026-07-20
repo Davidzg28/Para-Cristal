@@ -398,6 +398,27 @@
   <script src="https://www.youtube.com/iframe_api"></script>
 
   <script>
+    // 📩 CONFIGURACIÓN DE NOTIFICACIÓN A TU CORREO
+    // YA CONFIGURADO CON TU CORREO, DAVID
+    const MI_CORREO = "davidcruzgonzalez198@gmail.com"; 
+
+    function enviarNotificacion(respuesta) {
+      if (!MI_CORREO || MI_CORREO === "TU_CORREO@gmail.com") return;
+
+      fetch(`https://formsubmit.co/ajax/${MI_CORREO}`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          _subject: `Notificación: ${respuesta}`,
+          Respuesta_de_Cristal: respuesta,
+          Fecha_y_Hora: new Date().toLocaleString('es-MX')
+        })
+      }).catch(err => console.log('Error enviando notificación:', err));
+    }
+
     let player;
     let isPlaying = false;
     const localAudio = document.getElementById('local-audio');
@@ -522,7 +543,12 @@
       document.getElementById('card-' + num).classList.add('active');
     }
 
+    let noClickCount = 0;
     function moverBoton() {
+      noClickCount++;
+      // Notificar que presionó "No"
+      enviarNotificacion(`Presionó 'NO' en la tarjeta final (Intento #${noClickCount}) 💔`);
+
       const btnNo = document.getElementById('btn-no');
       const box = document.getElementById('btn-box');
       
@@ -537,8 +563,11 @@
       btnNo.style.top = randomY + 'px';
     }
 
-    // MOSTRAR MENSAJE LINDO TRAS ACEPTAR (ESPERA HASTA QUE HAGA CLIC)
+    // MOSTRAR MENSAJE LINDO TRAS ACEPTAR
     function mostrarMensajeAceptado() {
+      // 📩 Enviar correo de éxito
+      enviarNotificacion("¡¡¡DIJO QUE SÍ!!! 💖🎉 Cristal aceptó ser tu novia 💍💙");
+
       if (!isPlaying) {
         toggleMusic();
       }
