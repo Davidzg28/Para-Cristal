@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Para Cristal 💙🖤 David & Cristal Universe</title>
+  <title>Para Cristal 💙🖤 Nuestro Universo</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,6 +44,29 @@
       pointer-events: none;
     }
 
+    /* BARRA DE LETRA DE CANCIÓN (EFECTO TIPEADO) */
+    #lyrics-container {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 999;
+      background: rgba(15, 23, 42, 0.88);
+      border: 1px solid rgba(96, 165, 250, 0.6);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+      padding: 12px 24px;
+      border-radius: 30px;
+      color: #93c5fd;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      max-width: 90%;
+      display: none;
+      pointer-events: none;
+      letter-spacing: 0.5px;
+    }
+
     .music-player {
       position: fixed;
       top: 15px;
@@ -81,7 +104,6 @@
     .card-sunflower-top { top: 12px; left: 15px; }
     .card-sunflower-bottom { bottom: 12px; right: 15px; }
 
-    /* ESTILO DE TARJETAS CON UNIVERSO DE FONDO */
     .card {
       background: 
         radial-gradient(circle at 20% 20%, rgba(236, 72, 153, 0.35) 0%, transparent 40%),
@@ -245,7 +267,7 @@
 
     #phrase-modal {
       position: fixed;
-      bottom: 40px;
+      bottom: 85px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 200;
@@ -287,7 +309,7 @@
 </head>
 <body>
 
-  <!-- Elemento de Audio Directo apuntando a tu archivo .m4a -->
+  <!-- Audio directo -->
   <audio id="local-audio" loop src="Índigo   Camilo   Evaluna Montaner.m4a" preload="auto"></audio>
 
   <!-- Canvas de fondo para el universo animado -->
@@ -295,7 +317,12 @@
 
   <!-- Contenedor Galaxia 3D -->
   <div id="galaxy-container"></div>
-  <div id="galaxy-title">¡BOOYAH! 💙🖤<br><span style="font-size: 0.85rem; color: #cbd5e1; font-family: 'Outfit';">David & Cristal ✨ Usa tu dedo para navegar por nuestro universo</span></div>
+  <div id="galaxy-title">¡BOOYAH! 💙🖤<br><span style="font-size: 0.85rem; color: #cbd5e1; font-family: 'Outfit';">Usa tu dedo para navegar por nuestro universo</span></div>
+
+  <!-- Contenedor para escribir la letra de la canción -->
+  <div id="lyrics-container">
+    <span id="lyrics-text">🎵 ...</span>
+  </div>
 
   <div id="phrase-modal">
     <div id="modal-text"></div>
@@ -310,7 +337,7 @@
 
   <main class="app-container" id="cards-wrapper">
     
-    <!-- PORTADA / ENTRADA -->
+    <!-- PORTADA / ENTRADA EN PRIMERA PERSONA -->
     <div id="card-0" class="card active">
       <div class="card-sunflower-top">🌻 💖 🌻</div>
       <div class="card-sunflower-bottom">🌻 💖 🌻</div>
@@ -318,7 +345,7 @@
       <h1 class="title-text">Un Nuevo Capítulo 💙💖</h1>
       <p class="card-caption" id="cover-caption-text" style="text-align: center; font-size: 1.05rem;">
         ¡Hola, Cristal! 👋<br><br>
-        ¿Estás lista para comenzar a leer un nuevo capítulo juntos con David? 📖✨
+        ¿Estás lista para comenzar a leer un nuevo capítulo conmigo? 📖✨
       </p>
       
       <div class="buttons-container" id="cover-btn-box" style="flex-direction: column; align-items: center; gap: 12px; min-height: 100px;">
@@ -339,19 +366,19 @@
       <button class="btn btn-next" onclick="siguienteTarjeta(2)">Siguiente ➡️</button>
     </div>
 
-    <!-- TARJETA 2 -->
+    <!-- TARJETA 2 EN PRIMERA PERSONA -->
     <div id="card-2" class="card">
       <div class="card-sunflower-top">🌻 💖 🌻</div>
       <div class="card-sunflower-bottom">🌻 💖 🌻</div>
       <img src="tarjeta2.jpeg" alt="Foto 2" class="card-img">
       <h1 class="title-text">Un detalle para ti 🌻💖</h1>
       <p class="card-caption">
-        Sé que te encantan los girasoles y el contraste entre el <b>azul y el negro</b> con toques de amor. Por eso David preparó este espacio pensado especialmente en ti.
+        Sé que te encantan los girasoles y el contraste entre el <b>azul y el negro</b> con toques de amor. Por eso preparé este espacio pensado especialmente en ti.
       </p>
       <button class="btn btn-next" onclick="siguienteTarjeta(3)">Siguiente ➡️</button>
     </div>
 
-    <!-- TARJETA 3 -->
+    <!-- TARJETA 3 EN PRIMERA PERSONA -->
     <div id="card-3" class="card">
       <div class="card-sunflower-top">🌻 💖 🌻</div>
       <div class="card-sunflower-bottom">🌻 💖 🌻</div>
@@ -359,19 +386,19 @@
       <h1 class="title-text">Coincidencia Divina 🌌💖</h1>
       <p class="card-caption">
         <i>"En un universo infinitamente grande, mi lugar favorito siempre será haber coincidido contigo."</i><br><br>
-        Cada risa, cada charla y cada partida compartida contigo se han vuelto inigualables.
+        Cada risa, cada charla y cada partida compartida contigo se han vuelto inigualables para mí.
       </p>
       <button class="btn btn-next" onclick="siguienteTarjeta(4)">Ver pregunta final ✨</button>
     </div>
 
-    <!-- TARJETA 4 -->
+    <!-- TARJETA 4 EN PRIMERA PERSONA -->
     <div id="card-4" class="card">
       <div class="card-sunflower-top">🌻 💖 🌻</div>
       <div class="card-sunflower-bottom">🌻 💖 🌻</div>
       <img src="tarjeta4.jpeg" alt="Foto 4" class="card-img">
       <h1 class="title-text">Tengo una pregunta... 💍💙</h1>
       <p class="card-caption" style="text-align: center; font-size: 1.1rem; font-weight: 600;">
-        ¿Quieres dar el siguiente paso y ser la novia de David, Cristal?
+        ¿Quieres dar el siguiente paso y ser mi novia, Cristal?
       </p>
       
       <div class="buttons-container" id="btn-box">
@@ -385,10 +412,57 @@
   <script src="https://www.youtube.com/iframe_api"></script>
 
   <script>
-    // SISTEMA DE MÚSICA CON AUDIO LOCAL .M4A
+    // SISTEMA DE MÚSICA Y LETRAS ESCRIBIÉNDOSE EN TIEMPO REAL (KARAOKE TYPEWRITER)
     let player;
     let isPlaying = false;
     const localAudio = document.getElementById('local-audio');
+    const lyricsContainer = document.getElementById('lyrics-container');
+    const lyricsText = document.getElementById('lyrics-text');
+
+    // LETRA DE "ÍNDIGO" CON TIEMPOS SINCRO Y EFECTO DE ESCRITURA
+    const indigoLyrics = [
+      { time: 0, text: "🎵 Como cuando pasa un cometa a siete mil años..." },
+      { time: 6, text: "O la noche que cae sobre el mar..." },
+      { time: 12, text: "Porque llegó a mi vida el amor de mi vida 💙" },
+      { time: 18, text: "Yo no lo buscaba ni lo esperaba..." },
+      { time: 24, text: "Pero llegaste tú a cambiarlo todo 🌌" },
+      { time: 30, text: "Y ahora suenan los tambores en mi corazón... 🥁💖" },
+      { time: 37, text: "¡Porque antes de ti no sabía lo que era amar! ✨" },
+      { time: 45, text: "Tú eres mi persona favorita en este universo 🪐💙" },
+      { time: 53, text: "Gracias por coincidir conmigo, Cristal 🌻" }
+    ];
+
+    let currentLyricIndex = -1;
+    let typeInterval = null;
+
+    function startTypewriterLyrics(text) {
+      clearInterval(typeInterval);
+      lyricsText.innerText = "";
+      let charIndex = 0;
+
+      typeInterval = setInterval(() => {
+        if (charIndex < text.length) {
+          lyricsText.innerText += text.charAt(charIndex);
+          charIndex++;
+        } else {
+          clearInterval(typeInterval);
+        }
+      }, 50); // Velocidad al escribir cada letra
+    }
+
+    localAudio.addEventListener('timeupdate', () => {
+      const currentTime = localAudio.currentTime;
+      for (let i = indigoLyrics.length - 1; i >= 0; i--) {
+        if (currentTime >= indigoLyrics[i].time) {
+          if (currentLyricIndex !== i) {
+            currentLyricIndex = i;
+            lyricsContainer.style.display = 'block';
+            startTypewriterLyrics(indigoLyrics[i].text);
+          }
+          break;
+        }
+      }
+    });
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('yt-hidden-player', {
@@ -406,12 +480,13 @@
         localAudio.play().then(() => {
           isPlaying = true;
           btn.innerHTML = "⏸️ Pausar música";
+          lyricsContainer.style.display = 'block';
         }).catch((err) => {
-          console.log("Fallback a YouTube por:", err);
           if (player && player.playVideo) {
             player.playVideo();
             isPlaying = true;
             btn.innerHTML = "⏸️ Pausar música";
+            lyricsContainer.style.display = 'block';
           }
         });
       } else {
@@ -421,6 +496,7 @@
         }
         isPlaying = false;
         btn.innerHTML = "🎵 Poner Índigo 💙";
+        lyricsContainer.style.display = 'none';
       }
     }
 
@@ -472,7 +548,7 @@
     const coverMessages = [
       "¿Estás segura que no? 🥺💙",
       "¡Piénsalo bien, Cristal! 🥺✨",
-      "¿De verdad no quieres ver lo que David preparó para ti? 💔",
+      "¿De verdad no quieres ver lo que preparé con tanto cariño para ti? 💔",
       "¡Oye! ¡Di que sí por favor! 🥺💙",
       "¡Ya no hay opción de decir que no! 😉✨"
     ];
@@ -539,7 +615,7 @@
       iniciarGalaxia3D();
     }
 
-    // MOTOR 3D CON FRASE "TÚ Y YO" EN GRANDE + FRASES DE DAVID Y CRISTAL
+    // MOTOR 3D CON FRASE "TÚ Y YO" EN GRANDE EN PRIMERA PERSONA
     function iniciarGalaxia3D() {
       const container = document.getElementById('galaxy-container');
       
@@ -800,14 +876,14 @@
       scene.add(new THREE.AmbientLight(0x333333));
       scene.add(planetGroup);
 
-      // 4. FRASES AZULES + STICKERS CIRCULARES
+      // 4. FRASES EN PRIMERA PERSONA + STICKERS CIRCULARES
       const lista35Frases = [
         { texto: "TU LUZ EN MI UNIVERSO 🌌", icon: "🐻🐼💖" },
-        { texto: "DAVID Y CRISTAL 💙", icon: "🧸✨" },
+        { texto: "CONTIGO SIEMPRE 💙", icon: "🧸✨" },
         { texto: "MI PERSONA FAVORITA 👑", icon: "🐼💙" },
         { texto: "PROMESA ESTELAR ✨", icon: "🐻💫" },
         { texto: "INFINITO AMOR 🪐", icon: "🐼💖" },
-        { texto: "CRISTAL Y DAVID 🖤💙", icon: "🐻💌" },
+        { texto: "CRISTAL Y YO 🖤💙", icon: "🐻💌" },
         { texto: "MI DUO PERFECTO 🎮", icon: "🐼🏆" },
         { texto: "ME ENCANTAS 💙", icon: "🐻👑" },
         { texto: "MI LUGAR SEGURO 🏰", icon: "🐼🛡️" },
@@ -821,22 +897,22 @@
         { texto: "NUESTRA HISTORIA 📖", icon: "🐼✨" },
         { texto: "AMOR INFINITO ♾️", icon: "🐻💖" },
         { texto: "BOOYAH JUNTOS 👑", icon: "🔥🎮" },
-        { texto: "SOPORTE Y COMPAÑERA 🛡️", icon: "🐻👑" },
+        { texto: "MI SOPORTE Y COMPAÑERA 🛡️", icon: "🐻👑" },
         { texto: "MI ESTRELLA GUÍA 🌟", icon: "🐼💙" },
         { texto: "MI REINA 👸💙", icon: "🐻🖤" },
         { texto: "NUESTRO DESTINO 🌌", icon: "🐼✨" },
         { texto: "CUIDARÉ DE TI 💙", icon: "🐻💖" },
         { texto: "ERES MÁGICA ✨", icon: "🐼🌻" },
         { texto: "MI MEJOR VICTORIA 🏆", icon: "🐻💙" },
-        { texto: "CORAZÓN AZUL 💙", icon: "🐼🖤" },
+        { texto: "NUESTRO CORAZÓN AZUL 💙", icon: "🐼🖤" },
         { texto: "GIRASOLES PARA TI 🌻", icon: "🐻💙" },
-        { texto: "SMILE CRISTAL 😊", icon: "💖✨" },
-        { texto: "MI MUNDO 🪐", icon: "🐻🖤" },
+        { texto: "SONRÍE CRISTAL 😊", icon: "💖✨" },
+        { texto: "ERES MI MUNDO 🪐", icon: "🐻🖤" },
         { texto: "INSEPARABLES 🤞", icon: "🐼💙" },
         { texto: "UN CIELO DE ESTRELLAS 🌟", icon: "🐻✨" },
         { texto: "SÓLO TÚ 👑", icon: "🐼💙" },
         { texto: "MI COMPAÑERA DE VIDA 🌹", icon: "🐻🖤" },
-        { texto: "POR SIEMPRE ♾️", icon: "🐼🌻" }
+        { texto: "POR SIEMPRE JUNTOS ♾️", icon: "🐼🌻" }
       ];
 
       const canvasGroup = new THREE.Group();
