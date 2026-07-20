@@ -333,348 +333,6 @@
       <img src="tarjeta1.jpeg" alt="Foto 1" class="card-img">
       <h1 class="title-text">¡Hola, Cristal! 👋💙💖</h1>
       <p class="card-caption">
-        Hace un mes y medio coincidimos por primera vez jugando <b>Free Fire¡Vaya detalle tan lindo, David! Entendido perfectamente. Quieres que Cristal tenga todo el tiempo del mundo (un minuto y medio) para leer tu mensaje final, asimilarlo y disfrutar de la emoción antes de que el universo 3D se abra suavemente y de forma automática.
-
-He actualizado el código para que, tras presionar "¡Sí, acepto!", aparezca la tarjeta con tu mensaje lindo y se mantenga visible durante exactamente **90 segundos (1 minuto y medio)**. Después de ese tiempo, la transición al universo 3D ocurrirá de manera automática y fluida. También he incluido un botón por si acaso ella prefiere entrar antes de que acabe el tiempo.
-
-Aquí tienes el código completo y corregido para tu `index.html`:
-
-```html
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Para Cristal 💙🖤 Nuestro Universo</title>
-  
-  <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
-  <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
-  <link href="[https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap](https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap)" rel="stylesheet">
-  
-  <!-- Three.js y OrbitControls para Navegación Libre -->
-  <script src="[https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js](https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js)"></script>
-  <script src="[https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js](https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js)"></script>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Outfit', sans-serif;
-    }
-
-    body {
-      background: #020208;
-      color: #ffffff;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    /* Canvas de fondo para el universo animado */
-    #bg-stars-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .music-player {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      z-index: 1000;
-    }
-
-    #music-btn {
-      background: rgba(15, 23, 42, 0.9);
-      color: #60a5fa;
-      border: 1px solid #3b82f6;
-      padding: 10px 18px;
-      border-radius: 25px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 600;
-      box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
-      backdrop-filter: blur(8px);
-    }
-
-    .app-container {
-      max-width: 450px;
-      width: 100%;
-      position: relative;
-      z-index: 10;
-    }
-
-    .card-sunflower-top, .card-sunflower-bottom {
-      position: absolute;
-      font-size: 1.1rem;
-      opacity: 0.85;
-      z-index: 5;
-      pointer-events: none;
-    }
-    .card-sunflower-top { top: 12px; left: 15px; }
-    .card-sunflower-bottom { bottom: 12px; right: 15px; }
-
-    .card {
-      background: 
-        radial-gradient(circle at 20% 20%, rgba(236, 72, 153, 0.35) 0%, transparent 40%),
-        radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.4) 0%, transparent 45%),
-        radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.25) 0%, transparent 60%),
-        linear-gradient(135deg, rgba(10, 15, 30, 0.88) 0%, rgba(5, 8, 20, 0.92) 100%);
-      background-size: 200% 200%;
-      animation: galaxyBgMove 10s ease infinite alternate, fadeIn 0.8s ease-in-out;
-      border: 2px solid rgba(147, 197, 253, 0.5);
-      box-shadow: 
-        0 0 40px rgba(59, 130, 246, 0.4),
-        0 0 20px rgba(236, 72, 153, 0.3),
-        inset 0 0 30px rgba(147, 51, 234, 0.3);
-      backdrop-filter: blur(20px);
-      border-radius: 28px;
-      padding: 35px 22px;
-      text-align: center;
-      position: relative;
-      display: none;
-      overflow: hidden;
-    }
-
-    @keyframes galaxyBgMove {
-      0% { background-position: 0% 0%; }
-      50% { background-position: 100% 100%; }
-      100% { background-position: 0% 100%; }
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: 
-        radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 40px 70px, #f472b6, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 150px 160px, #60a5fa, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 250px 100px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(3px 3px at 300px 300px, #fbbf24, rgba(0,0,0,0));
-      background-repeat: repeat;
-      background-size: 350px 350px;
-      pointer-events: none;
-      animation: starTwinkle 6s linear infinite;
-      opacity: 0.6;
-    }
-
-    @keyframes starTwinkle {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-100px); }
-    }
-
-    .card.active {
-      display: block;
-    }
-
-    .card-img {
-      width: 100%;
-      max-height: 220px;
-      object-fit: cover;
-      border-radius: 18px;
-      margin-bottom: 18px;
-      border: 2px solid #f472b6;
-      box-shadow: 0 0 25px rgba(244, 114, 182, 0.5);
-      position: relative;
-      z-index: 2;
-    }
-
-    .title-text {
-      background: linear-gradient(90deg, #93c5fd, #f472b6, #fbbf24);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-size: 1.8rem;
-      margin-bottom: 15px;
-      font-family: 'Playfair Display', serif;
-      position: relative;
-      z-index: 2;
-      text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
-    }
-
-    .card-caption {
-      font-size: 0.98rem;
-      line-height: 1.6;
-      color: #f1f5f9;
-      margin-bottom: 22px;
-      background: rgba(3, 7, 18, 0.7);
-      padding: 16px;
-      border-radius: 16px;
-      border-left: 4px solid #3b82f6;
-      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(59, 130, 246, 0.2);
-      text-align: left;
-      position: relative;
-      z-index: 2;
-    }
-
-    .buttons-container {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      position: relative;
-      min-height: 55px;
-      z-index: 2;
-    }
-
-    .btn {
-      padding: 12px 28px;
-      font-size: 1rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .btn-next {
-      background: linear-gradient(90deg, #2563eb, #ec4899);
-      color: white;
-      box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
-      width: 100%;
-    }
-
-    .btn-yes {
-      background: linear-gradient(90deg, #ec4899, #3b82f6);
-      color: white;
-      box-shadow: 0 0 22px rgba(236, 72, 153, 0.7);
-    }
-
-    .btn-no {
-      background: #334155;
-      color: #94a3b8;
-      position: absolute;
-      right: 20px;
-    }
-
-    #galaxy-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 1;
-      display: none;
-    }
-
-    #galaxy-title {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 100;
-      color: #60a5fa;
-      font-size: 1.4rem;
-      font-family: 'Playfair Display', serif;
-      text-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
-      display: none;
-      text-align: center;
-      width: 90%;
-      pointer-events: none;
-    }
-
-    #phrase-modal {
-      position: fixed;
-      bottom: 85px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 200;
-      background: rgba(13, 22, 45, 0.95);
-      border: 2px solid #3b82f6;
-      box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
-      padding: 18px 24px;
-      border-radius: 20px;
-      color: #93c5fd;
-      font-size: 1.1rem;
-      font-weight: 600;
-      text-align: center;
-      display: none;
-      backdrop-filter: blur(10px);
-      max-width: 90%;
-      animation: popIn 0.3s ease-out;
-    }
-
-    #yt-hidden-player {
-      position: absolute;
-      top: -9999px;
-      left: -9999px;
-      width: 1px;
-      height: 1px;
-      opacity: 0.01;
-      pointer-events: none;
-    }
-
-    @keyframes popIn {
-      from { transform: translate(-50%, 20px) scale(0.8); opacity: 0; }
-      to { transform: translate(-50%, 0) scale(1); opacity: 1; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Audio directo -->
-  <audio id="local-audio" loop src="Índigo   Camilo   Evaluna Montaner.m4a" preload="auto"></audio>
-
-  <!-- Canvas de fondo para el universo animado -->
-  <canvas id="bg-stars-canvas"></canvas>
-
-  <!-- Contenedor Galaxia 3D -->
-  <div id="galaxy-container"></div>
-  <div id="galaxy-title">¡BOOYAH! 💙🖤<br><span style="font-size: 0.85rem; color: #cbd5e1; font-family: 'Outfit';">Usa tu dedo para navegar por nuestro universo</span></div>
-
-  <div id="phrase-modal">
-    <div id="modal-text"></div>
-  </div>
-
-  <!-- Botón de música de fondo -->
-  <div class="music-player">
-    <button id="music-btn" onclick="toggleMusic()">🎵 Poner Índigo 💙</button>
-  </div>
-
-  <div id="yt-hidden-player"></div>
-
-  <main class="app-container" id="cards-wrapper">
-    
-    <!-- PORTADA / ENTRADA EN PRIMERA PERSONA -->
-    <div id="card-0" class="card active">
-      <div class="card-sunflower-top">🌻 💖 🌻</div>
-      <div class="card-sunflower-bottom">🌻 💖 🌻</div>
-      <div style="font-size: 4rem; margin-bottom: 15px; animation: ambientGlow 3s infinite alternate;">📖✨</div>
-      <h1 class="title-text">Un Nuevo Capítulo 💙💖</h1>
-      <p class="card-caption" id="cover-caption-text" style="text-align: center; font-size: 1.05rem;">
-        ¡Hola, Cristal! 👋<br><br>
-        ¿Estás lista para comenzar a leer un nuevo capítulo conmigo? 📖✨
-      </p>
-      
-      <div class="buttons-container" id="cover-btn-box" style="flex-direction: column; align-items: center; gap: 12px; min-height: 100px;">
-        <button class="btn btn-next" id="btn-cover-yes" onclick="empezarCapitulo()" style="transition: transform 0.3s ease, margin 0.3s ease; z-index: 10;">✨ ¡Sí, empecemos! ✨</button>
-        <button class="btn btn-no" id="btn-cover-no" onclick="rechazarPortada()" style="position: relative; right: auto; width: 100px;">💔 No</button>
-      </div>
-    </div>
-
-    <!-- TARJETA 1 -->
-    <div id="card-1" class="card">
-      <div class="card-sunflower-top">🌻 💖 🌻</div>
-      <div class="card-sunflower-bottom">🌻 💖 🌻</div>
-      <img src="tarjeta1.jpeg" alt="Foto 1" class="card-img">
-      <h1 class="title-text">¡Hola, Cristal! 👋💙💖</h1>
-      <p class="card-caption">
         Hace un mes y medio coincidimos por primera vez jugando <b>Free Fire</b>. 
         Lo que empezó como una simple plática en el juego fue surgiendo algo lindo hacia ti 
         y además pasar tiempo contigo terminó convirtiéndose en lo mejor de mis días...
@@ -723,28 +381,26 @@ Aquí tienes el código completo y corregido para tu `index.html`:
       </div>
     </div>
 
-    <!-- TARJETA DE MENSAJE LINDO TRAS ACEPTAR (DURACIÓN: 1 MINUTO Y MEDIO) -->
+    <!-- TARJETA DE MENSAJE LINDO TRAS ACEPTAR -->
     <div id="card-accepted" class="card">
       <div class="card-sunflower-top">🌻 💖 🌻</div>
       <div class="card-sunflower-bottom">🌻 💖 🌻</div>
       <div style="font-size: 3.5rem; margin-bottom: 12px; animation: popIn 0.5s ease-out;">💍✨💖</div>
       <h1 class="title-text">¡Me haces el más feliz! 💙🖤</h1>
       <p class="card-caption" style="text-align: center; font-size: 1.05rem;">
-        ¡Gracias por darme el "Sí"! Prometo cuidar tu corazón, sacarte miles de sonrisas y ser siempre tu mejor compañero en cada partida y en cada momento de la vida. ¡Te quiero muchísimo! 🌻✨<br><br>
-        <i style="font-size: 0.9rem; color: #93c5fd;">Abriendo nuestro universo especial en un momento...</i>
+        ¡Gracias por darme el "Sí"! Prometo cuidar tu corazón, sacarte miles de sonrisas y ser siempre tu mejor compañero en cada partida y en cada momento de la vida. ¡Te quiero muchísimo! 🌻✨
       </p>
       <button class="btn btn-next" onclick="irAlUniverso()" style="margin-top: 15px;">🚀 Entrar a nuestro universo ahora</button>
     </div>
 
   </main>
 
-  <script src="[https://www.youtube.com/iframe_api](https://www.youtube.com/iframe_api)"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
 
   <script>
     let player;
     let isPlaying = false;
     const localAudio = document.getElementById('local-audio');
-    let acceptedTimeout = null; // Variable para controlar el tiempo de espera
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('yt-hidden-player', {
@@ -881,24 +537,16 @@ Aquí tienes el código completo y corregido para tu `index.html`:
       btnNo.style.top = randomY + 'px';
     }
 
-    // MOSTRAR MENSAJE LINDO TRAS ACEPTAR Y ESPERAR 1 MINUTO Y MEDIO ANTES DE IR AL UNIVERSO
+    // MOSTRAR MENSAJE LINDO TRAS ACEPTAR (ESPERA HASTA QUE HAGA CLIC)
     function mostrarMensajeAceptado() {
       if (!isPlaying) {
         toggleMusic();
       }
       document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
       document.getElementById('card-accepted').classList.add('active');
-
-      // Esperar 90 segundos (1 minuto y medio) antes de ir automáticamente al universo
-      acceptedTimeout = setTimeout(() => {
-        irAlUniverso();
-      }, 90000); // 90,000 milisegundos = 90 segundos
     }
 
     function irAlUniverso() {
-      // Limpiar el temporizador por si Cristal presionó el botón de entrar antes
-      if (acceptedTimeout) clearTimeout(acceptedTimeout);
-
       document.getElementById('cards-wrapper').style.display = 'none';
       document.getElementById('bg-stars-canvas').style.display = 'none';
       document.getElementById('galaxy-container').style.display = 'block';
@@ -1025,4 +673,388 @@ Aquí tienes el código completo y corregido para tu `index.html`:
       // 1C. METEORITOS
       const meteorGroup = new THREE.Group();
       const meteors = [];
-      const meteorCount
+      const meteorCount = 14;
+
+      for (let i = 0; i < meteorCount; i++) {
+        const points = [
+          new THREE.Vector3(0, 0, 0),
+          new THREE.Vector3(2.0, -1.0, 0.6)
+        ];
+        const meteorGeo = new THREE.BufferGeometry().setFromPoints(points);
+        const meteorMat = new THREE.LineBasicMaterial({
+          color: Math.random() > 0.5 ? 0x60a5fa : 0xf472b6,
+          transparent: true,
+          opacity: 0.8,
+          blending: THREE.AdditiveBlending
+        });
+        const line = new THREE.Line(meteorGeo, meteorMat);
+
+        const isAbove = Math.random() > 0.5;
+        const x = (Math.random() - 0.5) * 35;
+        const y = isAbove ? (8 + Math.random() * 8) : (-8 - Math.random() * 8);
+        const z = (Math.random() - 0.5) * 25;
+
+        line.position.set(x, y, z);
+
+        meteors.push({
+          mesh: line,
+          speedX: -0.22 - Math.random() * 0.28,
+          speedY: 0.11 + Math.random() * 0.14,
+          speedZ: (Math.random() - 0.5) * 0.08,
+          isAbove: isAbove
+        });
+
+        meteorGroup.add(line);
+      }
+      scene.add(meteorGroup);
+
+      // 2. CORAZÓN 3D
+      const heartPointCount = 2000;
+      const heartPositions = new Float32Array(heartPointCount * 3);
+      const explosionVelocities = [];
+      const targetHeartPositions = [];
+
+      for (let i = 0; i < heartPointCount; i++) {
+        const u = Math.random() * Math.PI * 2;
+        const v = Math.random() * Math.PI - Math.PI / 2;
+
+        const x = 16 * Math.pow(Math.sin(u), 3) * Math.cos(v);
+        const y = (13 * Math.cos(u) - 5 * Math.cos(2*u) - 2 * Math.cos(3*u) - Math.cos(4*u)) * Math.cos(v);
+        const z = 10 * Math.sin(v);
+
+        const tx = x * 0.22;
+        const ty = y * 0.22 + 2;
+        const tz = z * 0.22;
+
+        targetHeartPositions.push({ x: tx, y: ty, z: tz });
+
+        heartPositions[i * 3] = 0;
+        heartPositions[i * 3 + 1] = 2;
+        heartPositions[i * 3 + 2] = 0;
+
+        explosionVelocities.push({
+          x: (Math.random() - 0.5) * 25,
+          y: (Math.random() - 0.5) * 25,
+          z: (Math.random() - 0.5) * 25
+        });
+      }
+
+      const heartGeo = new THREE.BufferGeometry();
+      heartGeo.setAttribute('position', new THREE.BufferAttribute(heartPositions, 3));
+
+      const heartMat = new THREE.PointsMaterial({
+        color: 0xff2a85,
+        size: 0.18,
+        blending: THREE.AdditiveBlending,
+        transparent: true,
+        opacity: 0.95
+      });
+
+      const heartMesh = new THREE.Points(heartGeo, heartMat);
+      scene.add(heartMesh);
+
+      // 2B. CARTEL GIGANTE CENTRAL: "TÚ Y YO 💙🖤"
+      const bigCanvas = document.createElement('canvas');
+      const bigCtx = bigCanvas.getContext('2d');
+      bigCanvas.width = 600;
+      bigCanvas.height = 180;
+
+      const bigGrad = bigCtx.createLinearGradient(0, 0, 600, 180);
+      bigGrad.addColorStop(0, 'rgba(30, 58, 138, 0.95)');
+      bigGrad.addColorStop(0.5, 'rgba(236, 72, 153, 0.95)');
+      bigGrad.addColorStop(1, 'rgba(15, 23, 42, 0.95)');
+
+      bigCtx.fillStyle = bigGrad;
+      bigCtx.strokeStyle = '#60a5fa';
+      bigCtx.lineWidth = 6;
+      bigCtx.beginPath();
+      bigCtx.roundRect(15, 15, 570, 150, 30);
+      bigCtx.fill();
+      bigCtx.stroke();
+
+      bigCtx.fillStyle = '#ffffff';
+      bigCtx.font = 'Bold 55px sans-serif';
+      bigCtx.textAlign = 'center';
+      bigCtx.shadowColor = '#60a5fa';
+      bigCtx.shadowBlur = 20;
+      bigCtx.fillText("TÚ Y YO 💙🖤", 300, 105);
+
+      const bigTexture = new THREE.CanvasTexture(bigCanvas);
+      const bigSpriteMat = new THREE.SpriteMaterial({ map: bigTexture, transparent: true });
+      const bigSprite = new THREE.Sprite(bigSpriteMat);
+
+      bigSprite.position.set(0, 7.5, 0);
+      bigSprite.scale.set(7.5, 2.25, 1);
+      scene.add(bigSprite);
+
+      // 3. PLANETAS
+      const planetColors = ['#f472b6', '#60a5fa', '#fbbf24', '#ec4899', '#38bdf8'];
+      const planetGroup = new THREE.Group();
+
+      for (let i = 0; i < 5; i++) {
+        const planetGeo = new THREE.SphereGeometry(0.5 + Math.random() * 0.3, 16, 16);
+        const planetMat = new THREE.MeshPhongMaterial({
+          color: planetColors[i],
+          emissive: planetColors[i],
+          emissiveIntensity: 0.3,
+          shininess: 40,
+          transparent: true,
+          opacity: 0.95
+        });
+        const planet = new THREE.Mesh(planetGeo, planetMat);
+
+        const angle = (i / 5) * Math.PI * 2;
+        const dist = 6 + i * 1.5;
+        planet.position.set(Math.cos(angle) * dist, (Math.random() - 0.5) * 3, Math.sin(angle) * dist);
+        planet.userData = { angle: angle, distance: dist, speed: 0.005 + Math.random() * 0.01 };
+        planetGroup.add(planet);
+      }
+      
+      const light = new THREE.PointLight(0xffffff, 1.2, 50);
+      light.position.set(0, 5, 0);
+      scene.add(light);
+      scene.add(new THREE.AmbientLight(0x333333));
+      scene.add(planetGroup);
+
+      // 4. FRASES EN PRIMERA PERSONA + STICKERS CIRCULARES
+      const lista35Frases = [
+        { texto: "TU LUZ EN MI UNIVERSO 🌌", icon: "🐻🐼💖" },
+        { texto: "CONTIGO SIEMPRE 💙", icon: "🧸✨" },
+        { texto: "MI PERSONA FAVORITA 👑", icon: "🐼💙" },
+        { texto: "PROMESA ESTELAR ✨", icon: "🐻💫" },
+        { texto: "INFINITO AMOR 🪐", icon: "🐼💖" },
+        { texto: "CRISTAL Y YO 🖤💙", icon: "🐻💌" },
+        { texto: "MI DUO PERFECTO 🎮", icon: "🐼🏆" },
+        { texto: "ME ENCANTAS 💙", icon: "🐻👑" },
+        { texto: "MI LUGAR SEGURO 🏰", icon: "🐼🛡️" },
+        { texto: "JUNTOS EN CADA PARTIDA 🎯", icon: "🐻🖤" },
+        { texto: "MI SUEÑO CUMPLIDO 💫", icon: "🐼✨" },
+        { texto: "COINCIDIR CONTIGO 🌻", icon: "🐻💛" },
+        { texto: "TE ADORO CRISTAL 👑", icon: "🐼💖" },
+        { texto: "MI UNIVERSO ENTERO 🪐", icon: "🐻🌌" },
+        { texto: "SIEMPRE A TU LADO 🤝", icon: "🐼🖤" },
+        { texto: "LO MEJOR DE MIS DÍAS ☀️", icon: "🐻🌻" },
+        { texto: "NUESTRA HISTORIA 📖", icon: "🐼✨" },
+        { texto: "AMOR INFINITO ♾️", icon: "🐻💖" },
+        { texto: "BOOYAH JUNTOS 👑", icon: "🔥🎮" },
+        { texto: "MI SOPORTE Y COMPAÑERA 🛡️", icon: "🐻👑" },
+        { texto: "MI ESTRELLA GUÍA 🌟", icon: "🐼💙" },
+        { texto: "MI REINA 👸💙", icon: "🐻🖤" },
+        { texto: "NUESTRO DESTINO 🌌", icon: "🐼✨" },
+        { texto: "CUIDARÉ DE TI 💙", icon: "🐻💖" },
+        { texto: "ERES MÁGICA ✨", icon: "🐼🌻" },
+        { texto: "MI MEJOR VICTORIA 🏆", icon: "🐻💙" },
+        { texto: "NUESTRO CORAZÓN AZUL 💙", icon: "🐼🖤" },
+        { texto: "GIRASOLES PARA TI 🌻", icon: "🐻💙" },
+        { texto: "SONRÍE CRISTAL 😊", icon: "💖✨" },
+        { texto: "ERES MI MUNDO 🪐", icon: "🐻🖤" },
+        { texto: "INSEPARABLES 🤞", icon: "🐼💙" },
+        { texto: "UN CIELO DE ESTRELLAS 🌟", icon: "🐻✨" },
+        { texto: "SÓLO TÚ 👑", icon: "🐼💙" },
+        { texto: "MI COMPAÑERA DE VIDA 🌹", icon: "🐻🖤" },
+        { texto: "POR SIEMPRE JUNTOS ♾️", icon: "🐼🌻" }
+      ];
+
+      const canvasGroup = new THREE.Group();
+      const spriteList = [];
+
+      lista35Frases.forEach((elem, idx) => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 340;
+        canvas.height = 100;
+
+        const grad = ctx.createLinearGradient(0, 0, 340, 100);
+        grad.addColorStop(0, 'rgba(15, 23, 42, 0.92)');
+        grad.addColorStop(1, 'rgba(30, 58, 138, 0.85)');
+
+        ctx.fillStyle = grad;
+        ctx.strokeStyle = '#3b82f6';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.roundRect(10, 10, 320, 80, 20);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.font = '26px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(elem.icon, 170, 42);
+
+        ctx.fillStyle = '#60a5fa';
+        ctx.font = 'Bold 14px sans-serif';
+        ctx.fillText(elem.texto, 170, 72);
+
+        const texture = new THREE.CanvasTexture(canvas);
+        const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true });
+        const sprite = new THREE.Sprite(spriteMat);
+
+        const layer = idx % 5; 
+        const angle = (idx / (lista35Frases.length / 5)) * Math.PI * 2;
+        const dist = 8.5 + layer * 2.2; 
+        const heightPos = (Math.random() - 0.5) * 6;
+
+        sprite.position.set(Math.cos(angle) * dist, heightPos, Math.sin(angle) * dist);
+        sprite.scale.set(3.6, 1.15, 1);
+
+        sprite.userData = {
+          textoCompleto: elem.icon + " " + elem.texto,
+          angle: angle,
+          distance: dist,
+          height: heightPos,
+          speed: 0.002 + (layer * 0.0008)
+        };
+
+        canvasGroup.add(sprite);
+        spriteList.push(sprite);
+      });
+
+      for (let k = 1; k <= 8; k++) {
+        const img = new Image();
+        img.src = 'bubududu' + k + '.jpeg';
+
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          const size = 256;
+          canvas.width = size;
+          canvas.height = size;
+
+          ctx.beginPath();
+          ctx.arc(size / 2, size / 2, size / 2 - 6, 0, Math.PI * 2);
+          ctx.closePath();
+          ctx.clip(); 
+
+          ctx.drawImage(img, 0, 0, size, size);
+
+          ctx.lineWidth = 12;
+          ctx.strokeStyle = k % 2 === 0 ? '#ec4899' : '#3b82f6';
+          ctx.stroke();
+
+          const texture = new THREE.CanvasTexture(canvas);
+          const stickerSpriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true });
+          const stickerSprite = new THREE.Sprite(stickerSpriteMat);
+
+          const angle = (k / 8) * Math.PI * 2;
+          const dist = 6 + (k % 3) * 2;
+          const heightPos = (Math.random() - 0.5) * 5;
+
+          stickerSprite.position.set(Math.cos(angle) * dist, heightPos, Math.sin(angle) * dist);
+          stickerSprite.scale.set(2.8, 2.8, 1); 
+
+          stickerSprite.userData = {
+            textoCompleto: "💖 Bubu & Dudu Sticker #" + k,
+            angle: angle,
+            distance: dist,
+            height: heightPos,
+            speed: 0.003 + Math.random() * 0.002
+          };
+
+          canvasGroup.add(stickerSprite);
+          spriteList.push(stickerSprite);
+        };
+      }
+
+      scene.add(canvasGroup);
+
+      const raycaster = new THREE.Raycaster();
+      const mouse = new THREE.Vector2();
+
+      window.addEventListener('click', (e) => {
+        mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects(spriteList);
+
+        if (intersects.length > 0) {
+          const spriteTocado = intersects[0].object;
+          const modal = document.getElementById('phrase-modal');
+          const modalText = document.getElementById('modal-text');
+
+          modalText.innerText = spriteTocado.userData.textoCompleto;
+          modal.style.display = 'block';
+
+          setTimeout(() => {
+            modal.style.display = 'none';
+          }, 3500);
+        }
+      });
+
+      const clock = new THREE.Clock();
+
+      function animate() {
+        const elapsedTime = clock.getElapsedTime();
+
+        controls.update();
+
+        galaxy.rotation.y = elapsedTime * 0.035;
+        secondGalaxy.rotation.y = elapsedTime * 0.06;
+        
+        meteors.forEach(m => {
+          m.mesh.position.x += m.speedX;
+          m.mesh.position.y += m.speedY;
+          m.mesh.position.z += m.speedZ;
+
+          if (m.mesh.position.x < -30 || Math.abs(m.mesh.position.y) > 22) {
+            m.mesh.position.set(25 + Math.random() * 10, m.isAbove ? (8 + Math.random() * 8) : (-8 - Math.random() * 8), (Math.random() - 0.5) * 20);
+          }
+        });
+        
+        const currentPositions = heartGeo.attributes.position.array;
+        for (let i = 0; i < heartPointCount; i++) {
+          const idx = i * 3;
+          const target = targetHeartPositions[i];
+          const vel = explosionVelocities[i];
+
+          if (elapsedTime < 1.2) {
+            currentPositions[idx] += vel.x * 0.012;
+            currentPositions[idx + 1] += vel.y * 0.012;
+            currentPositions[idx + 2] += vel.z * 0.012;
+          } else {
+            currentPositions[idx] += (target.x - currentPositions[idx]) * 0.04;
+            currentPositions[idx + 1] += (target.y - currentPositions[idx + 1]) * 0.04;
+            currentPositions[idx + 2] += (target.z - currentPositions[idx + 2]) * 0.04;
+          }
+        }
+        heartGeo.attributes.position.needsUpdate = true;
+
+        heartMesh.rotation.y = elapsedTime * 0.12; 
+        const heartBeatScale = 1 + Math.sin(elapsedTime * 4.5) * 0.12; 
+        heartMesh.scale.set(heartBeatScale, heartBeatScale, heartBeatScale);
+
+        bigSprite.position.y = 7.5 + Math.sin(elapsedTime * 2) * 0.3;
+
+        planetGroup.children.forEach(planet => {
+          if (planet.userData.angle !== undefined) {
+            planet.userData.angle += planet.userData.speed;
+            const dist = planet.userData.distance;
+            planet.position.x = Math.cos(planet.userData.angle) * dist;
+            planet.position.z = Math.sin(planet.userData.angle) * dist;
+          }
+        });
+
+        canvasGroup.children.forEach(sprite => {
+          if (sprite.userData.angle !== undefined) {
+            sprite.userData.angle += sprite.userData.speed;
+            const dist = sprite.userData.distance;
+            sprite.position.x = Math.cos(sprite.userData.angle) * dist;
+            sprite.position.z = Math.sin(sprite.userData.angle) * dist;
+            sprite.position.y = sprite.userData.height + Math.sin(elapsedTime + dist) * 0.3;
+          }
+        });
+
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    }
+  </script>
+</body>
+</html>
