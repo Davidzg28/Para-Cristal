@@ -86,7 +86,7 @@
       display: block;
     }
 
-    /* Estilo para las fotos dentro de las tarjetas (JPG/PNG) */
+    /* Estilo para las fotos dentro de las tarjetas */
     .card-img {
       width: 100%;
       max-height: 220px;
@@ -213,7 +213,7 @@
 
   <main class="app-container" id="cards-wrapper">
     
-    <!-- TARJETA 1 (Usa tarjeta1.jpeg) -->
+    <!-- TARJETA 1 -->
     <div id="card-1" class="card active">
       <img src="tarjeta1.jpeg" alt="Foto 1" class="card-img">
       <h1 class="title-text">¡Hola, Cristal! 👋💙</h1>
@@ -223,17 +223,17 @@
       <button class="btn btn-next" onclick="siguienteTarjeta(2)">Siguiente ➡️</button>
     </div>
 
-    <!-- TARJETA 2 (Usa tarjeta2.jpeg) -->
+    <!-- TARJETA 2 -->
     <div id="card-2" class="card">
       <img src="tarjeta2.jpeg" alt="Foto 2" class="card-img">
       <h1 class="title-text">Un detalle para ti 🌻💙</h1>
       <p class="card-caption">
-        Sé que tus colores favoritos son el <b>azul y el negro</b>, y que te encantan los girasoles. Por eso preparé este espacio pensando en todo lo que te gusta.
+        Sé que tus colores favoritos son el <b>azul y el negro</b>, y que te encantan los girasoles. Por eso preparé este espacio pensado en todo lo que te gusta.
       </p>
       <button class="btn btn-next" onclick="siguienteTarjeta(3)">Siguiente ➡️</button>
     </div>
 
-    <!-- TARJETA 3 (Usa tarjeta3.png) -->
+    <!-- TARJETA 3 -->
     <div id="card-3" class="card">
       <img src="tarjeta3.png" alt="Foto 3" class="card-img">
       <h1 class="title-text">Coincidencia Divina 🌌</h1>
@@ -244,7 +244,7 @@
       <button class="btn btn-next" onclick="siguienteTarjeta(4)">Ver pregunta final ✨</button>
     </div>
 
-    <!-- TARJETA 4 (Usa tarjeta4.jpeg y PREGUNTA FINAL) -->
+    <!-- TARJETA 4 -->
     <div id="card-4" class="card">
       <img src="tarjeta4.jpeg" alt="Foto 4" class="card-img">
       <h1 class="title-text">Tengo una pregunta... 💍💙</h1>
@@ -313,7 +313,6 @@
       }
     }
 
-    // ACCIÓN AL ACEPTAR: INICIAR GALAXIA 3D CON PLANETAS BONITOS
     function aceptar() {
       document.getElementById('cards-wrapper').style.display = 'none';
       document.getElementById('galaxy-container').style.display = 'block';
@@ -326,13 +325,13 @@
       iniciarGalaxia3D();
     }
 
-    // MOTOR 3D (THREE.JS) CON PLANETAS BONITOS
+    // MOTOR 3D (THREE.JS) CON 35 FRASES ROTATORIAS
     function iniciarGalaxia3D() {
       const container = document.getElementById('galaxy-container');
       
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-      camera.position.set(0, 18, 28);
+      camera.position.set(0, 18, 30);
       camera.lookAt(0, 0, 0);
 
       const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -342,9 +341,9 @@
 
       // 1. PARTICULAS DE LA GALAXIA EN ESPIRAL
       const parameters = {
-        count: 14000,
+        count: 15000,
         size: 0.015,
-        radius: 14,
+        radius: 16,
         branches: 4,
         spin: 1,
         randomness: 0.5,
@@ -401,7 +400,7 @@
       for (let t = 0; t < Math.PI * 2; t += 0.05) {
         const x = 16 * Math.pow(Math.sin(t), 3);
         const y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
-        heartPoints.push(new THREE.Vector3(x * 0.20, y * 0.20 + 2, 0));
+        heartPoints.push(new THREE.Vector3(x * 0.22, y * 0.22 + 2, 0));
       }
 
       const heartGeo = new THREE.BufferGeometry().setFromPoints(heartPoints);
@@ -409,14 +408,12 @@
       const heartMesh = new THREE.Points(heartGeo, heartMat);
       scene.add(heartMesh);
 
-      // 3. PLANETAS BONITOS ORBITANDO EL CORAZÓN
+      // 3. PLANETAS BONITOS
       const planetColors = ['#60a5fa', '#fbbf24', '#f472b6', '#34d399', '#a78bfa'];
       const planetGroup = new THREE.Group();
 
       for (let i = 0; i < 5; i++) {
-        // Geometría del planeta (Esfera)
         const planetGeo = new THREE.SphereGeometry(0.5 + Math.random() * 0.3, 16, 16);
-        // Material del planeta con color bonito y brillo suave
         const planetMat = new THREE.MeshPhongMaterial({
           color: planetColors[i],
           emissive: planetColors[i],
@@ -427,67 +424,102 @@
         });
         const planet = new THREE.Mesh(planetGeo, planetMat);
 
-        // Posición inicial y órbita
         const angle = (i / 5) * Math.PI * 2;
-        const dist = 7 + i * 1.5; // Distancias variadas
+        const dist = 6 + i * 1.5;
         planet.position.set(Math.cos(angle) * dist, (Math.random() - 0.5) * 3, Math.sin(angle) * dist);
-        
-        // Datos personalizados para la animación
         planet.userData = { angle: angle, distance: dist, speed: 0.005 + Math.random() * 0.01 };
-        
         planetGroup.add(planet);
       }
       
-      // Luz puntual para que los planetas brillen
       const light = new THREE.PointLight(0xffffff, 1, 50);
       light.position.set(0, 5, 0);
       scene.add(light);
-      scene.add(new THREE.AmbientLight(0x222222)); // Luz ambiental suave
-
+      scene.add(new THREE.AmbientLight(0x222222));
       scene.add(planetGroup);
 
-      // 4. PALABRAS BONITAS + FIGURITAS ORBITANDO
-      const elementos = [
+      // 4. LISTA DE 35 PALABRAS Y FRASES ROMÁNTICAS
+      const lista35Frases = [
         { texto: "TU LUZ EN MI UNIVERSO 🌌", icon: "🌻💖" },
         { texto: "CONTIGO SIEMPRE 💙", icon: "🧸✨" },
         { texto: "MI PERSONA FAVORITA 👑", icon: "🎀💙" },
         { texto: "PROMESA ESTELAR ✨", icon: "🌟💫" },
         { texto: "INFINITO AMOR 🪐", icon: "🌻💖" },
-        { texto: "CRISTAL Y YO 🖤💙", icon: "🌸💌" }
+        { texto: "CRISTAL Y YO 🖤💙", icon: "🌸💌" },
+        { texto: "MI DUO PERFECTO 🎮", icon: "🔥🏆" },
+        { texto: "ME ENCANTAS 💙", icon: "✨👑" },
+        { texto: "MI LUGAR SEGURO 🏰", icon: "🛡️💙" },
+        { texto: "JUNTOS EN CADA PARTIDA 🎯", icon: "🎮🖤" },
+        { texto: "MI SUEÑO CUMPLIDO 💫", icon: "🌌✨" },
+        { texto: "COINCIDIR CONTIGO 🌻", icon: "💛💙" },
+        { texto: "TE ADORO CRISTAL 👑", icon: "💖✨" },
+        { texto: "MI UNIVERSO ENTERO 🪐", icon: "🌌💙" },
+        { texto: "SIEMPRE A TU LADO 🤝", icon: "💙🖤" },
+        { texto: "LO MEJOR DE MIS DÍAS ☀️", icon: "🌻✨" },
+        { texto: "NUESTRA HISTORIA 📖", icon: "💙✨" },
+        { texto: "AMOR INFINITO ♾️", icon: "💖🌌" },
+        { texto: "BOOYAH JUNTOS 👑", icon: "🔥🎮" },
+        { texto: "SOPORTE Y COMPAÑERA 🛡️", icon: "💙👑" },
+        { texto: "MI ESTRELLA GUÍA 🌟", icon: "✨💙" },
+        { texto: "MI REINA 👸💙", icon: "👑🖤" },
+        { texto: "NUESTRO DESTINO 🌌", icon: "✨💫" },
+        { texto: "CUIDARÉ DE TI 💙", icon: "🛡️💖" },
+        { texto: "ERES MÁGICA ✨", icon: "🌌🌻" },
+        { texto: "MI MEJOR VICTORIA 🏆", icon: "🔥💙" },
+        { texto: "CORAZÓN AZUL 💙", icon: "🖤✨" },
+        { texto: "GIRASOLES PARA TI 🌻", icon: "💛💙" },
+        { texto: "SMILE CRISTAL 😊", icon: "💖✨" },
+        { texto: "MI MUNDO 🪐", icon: "🌌🖤" },
+        { texto: "INSEPARABLES 🤞", icon: "💙🖤" },
+        { texto: "UN CIELO DE ESTRELLAS 🌟", icon: "✨🌌" },
+        { texto: "SÓLO TÚ 👑", icon: "💖💙" },
+        { texto: "MI COMPAÑERA DE VIDA 🌹", icon: "💙🖤" },
+        { texto: "POR SIEMPRE ♾️", icon: "✨🌻" }
       ];
 
       const canvasGroup = new THREE.Group();
 
-      elementos.forEach((elem, idx) => {
+      lista35Frases.forEach((elem, idx) => {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
-        canvas.width = 320;
+        canvas.width = 340;
         canvas.height = 100;
 
-        ctx.fillStyle = 'rgba(15, 23, 42, 0.8)';
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.82)';
         ctx.strokeStyle = '#3b82f6';
         ctx.lineWidth = 3;
         ctx.beginPath();
-        ctx.roundRect(10, 10, 300, 80, 20);
+        ctx.roundRect(10, 10, 320, 80, 20);
         ctx.fill();
         ctx.stroke();
 
-        ctx.font = '28px sans-serif';
+        ctx.font = '26px sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText(elem.icon, 160, 42);
+        ctx.fillText(elem.icon, 170, 42);
 
         ctx.fillStyle = '#60a5fa';
-        ctx.font = 'Bold 15px sans-serif';
-        ctx.fillText(elem.texto, 160, 72);
+        ctx.font = 'Bold 14px sans-serif';
+        ctx.fillText(elem.texto, 170, 72);
 
         const texture = new THREE.CanvasTexture(canvas);
         const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true });
         const sprite = new THREE.Sprite(spriteMat);
 
-        const angle = (idx / elementos.length) * Math.PI * 2;
-        const dist = 10 + Math.random() * 3; // Más lejos que los planetas
-        sprite.position.set(Math.cos(angle) * dist, (Math.random() - 0.5) * 4 + 1, Math.sin(angle) * dist);
-        sprite.scale.set(3.5, 1.1, 1);
+        // Distribuir las 35 frases en varias capas/órbitas
+        const layer = idx % 5; 
+        const angle = (idx / (lista35Frases.length / 5)) * Math.PI * 2;
+        const dist = 8 + layer * 2.2; 
+        const heightPos = (Math.random() - 0.5) * 6;
+
+        sprite.position.set(Math.cos(angle) * dist, heightPos, Math.sin(angle) * dist);
+        sprite.scale.set(3.6, 1.15, 1);
+
+        // Guardar datos de órbita individual para que cada frase gire
+        sprite.userData = {
+          angle: angle,
+          distance: dist,
+          height: heightPos,
+          speed: 0.002 + (layer * 0.0008)
+        };
 
         canvasGroup.add(sprite);
       });
@@ -515,29 +547,37 @@
         previousMousePosition = { x: e.clientX, y: e.clientY };
       });
 
-      // ANIMACIÓN CONTINUA DE LA GALAXIA, CORAZÓN Y PLANETAS
+      // ANIMACIÓN CONTINUA: ROTACIÓN DE GALAXIA, PLANETAS Y FRASES
       const clock = new THREE.Clock();
 
       function animate() {
         const elapsedTime = clock.getElapsedTime();
 
-        // Rotación de la galaxia y textos
-        galaxy.rotation.y = elapsedTime * 0.05;
-        canvasGroup.rotation.y = elapsedTime * 0.035;
+        // Rotación general de la galaxia
+        galaxy.rotation.y = elapsedTime * 0.04;
         
         // Latido del corazón
         heartMesh.rotation.y = elapsedTime * 0.1;
         heartMesh.scale.setScalar(1 + Math.sin(elapsedTime * 3) * 0.08); 
 
-        // Animación de los planetas orbitando
+        // Rotación de los planetas
         planetGroup.children.forEach(planet => {
           if (planet.userData.angle !== undefined) {
             planet.userData.angle += planet.userData.speed;
             const dist = planet.userData.distance;
             planet.position.x = Math.cos(planet.userData.angle) * dist;
             planet.position.z = Math.sin(planet.userData.angle) * dist;
-            // Pequeña oscilación vertical
-            planet.position.y += Math.sin(elapsedTime * 0.5 + planet.userData.distance) * 0.01;
+          }
+        });
+
+        // Rotación de CADA UNA de las 35 frases orbitando en el universo
+        canvasGroup.children.forEach(sprite => {
+          if (sprite.userData.angle !== undefined) {
+            sprite.userData.angle += sprite.userData.speed;
+            const dist = sprite.userData.distance;
+            sprite.position.x = Math.cos(sprite.userData.angle) * dist;
+            sprite.position.z = Math.sin(sprite.userData.angle) * dist;
+            sprite.position.y = sprite.userData.height + Math.sin(elapsedTime + dist) * 0.3;
           }
         });
 
@@ -547,7 +587,6 @@
 
       animate();
 
-      // Ajustar en cambio de tamaño de ventana
       window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
