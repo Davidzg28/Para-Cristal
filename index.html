@@ -22,7 +22,7 @@
     }
 
     body {
-      background: #03040c;
+      background: #020208;
       color: #ffffff;
       min-height: 100vh;
       display: flex;
@@ -31,6 +31,17 @@
       padding: 20px;
       overflow: hidden;
       position: relative;
+    }
+
+    /* Fondo animado de universo para toda la pantalla inicial */
+    #bg-stars-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
     }
 
     .music-player {
@@ -70,26 +81,36 @@
     .card-sunflower-top { top: 12px; left: 15px; }
     .card-sunflower-bottom { bottom: 12px; right: 15px; }
 
+    /* ESTILO DE TARJETAS CON UNIVERSO DE FONDO EN VIVO */
     .card {
       background: 
-        radial-gradient(circle at 10% 10%, rgba(236, 72, 153, 0.22) 0%, transparent 45%),
-        radial-gradient(circle at 90% 90%, rgba(59, 130, 246, 0.28) 0%, transparent 45%),
-        linear-gradient(145deg, rgba(15, 23, 42, 0.94) 0%, rgba(10, 15, 30, 0.96) 50%, rgba(20, 10, 30, 0.94) 100%);
-      border: 2px solid rgba(236, 72, 153, 0.65);
+        radial-gradient(circle at 20% 20%, rgba(236, 72, 153, 0.35) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.4) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.25) 0%, transparent 60%),
+        linear-gradient(135deg, rgba(10, 15, 30, 0.88) 0%, rgba(5, 8, 20, 0.92) 100%);
+      background-size: 200% 200%;
+      animation: galaxyBgMove 10s ease infinite alternate, fadeIn 0.8s ease-in-out;
+      border: 2px solid rgba(147, 197, 253, 0.5);
       box-shadow: 
-        0 0 35px rgba(236, 72, 153, 0.35),
-        0 0 18px rgba(59, 130, 246, 0.25),
-        inset 0 0 25px rgba(236, 72, 153, 0.15);
-      backdrop-filter: blur(16px);
-      border-radius: 26px;
+        0 0 40px rgba(59, 130, 246, 0.4),
+        0 0 20px rgba(236, 72, 153, 0.3),
+        inset 0 0 30px rgba(147, 51, 234, 0.3);
+      backdrop-filter: blur(20px);
+      border-radius: 28px;
       padding: 35px 22px;
       text-align: center;
       position: relative;
       display: none;
-      animation: fadeIn 0.8s ease-in-out;
       overflow: hidden;
     }
 
+    @keyframes galaxyBgMove {
+      0% { background-position: 0% 0%; }
+      50% { background-position: 100% 100%; }
+      100% { background-position: 0% 100%; }
+    }
+
+    /* Brillo de destellos estelares dentro de la tarjeta */
     .card::before {
       content: "";
       position: absolute;
@@ -97,14 +118,22 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+      background: 
+        radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 40px 70px, #f472b6, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 150px 160px, #60a5fa, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 250px 100px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(3px 3px at 300px 300px, #fbbf24, rgba(0,0,0,0));
+      background-repeat: repeat;
+      background-size: 350px 350px;
       pointer-events: none;
-      animation: ambientGlow 8s ease-in-out infinite alternate;
+      animation: starTwinkle 6s linear infinite;
+      opacity: 0.6;
     }
 
-    @keyframes ambientGlow {
-      0% { transform: translate(0, 0); }
-      100% { transform: translate(20px, 20px); }
+    @keyframes starTwinkle {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-100px); }
     }
 
     .card.active {
@@ -118,13 +147,13 @@
       border-radius: 18px;
       margin-bottom: 18px;
       border: 2px solid #f472b6;
-      box-shadow: 0 0 20px rgba(244, 114, 182, 0.45);
+      box-shadow: 0 0 25px rgba(244, 114, 182, 0.5);
       position: relative;
       z-index: 2;
     }
 
     .title-text {
-      background: linear-gradient(90deg, #93c5fd, #f472b6);
+      background: linear-gradient(90deg, #93c5fd, #f472b6, #fbbf24);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       font-size: 1.8rem;
@@ -132,18 +161,19 @@
       font-family: 'Playfair Display', serif;
       position: relative;
       z-index: 2;
+      text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
     }
 
     .card-caption {
       font-size: 0.98rem;
       line-height: 1.6;
-      color: #e2e8f0;
+      color: #f1f5f9;
       margin-bottom: 22px;
-      background: rgba(3, 7, 18, 0.65);
+      background: rgba(3, 7, 18, 0.7);
       padding: 16px;
       border-radius: 16px;
-      border-left: 4px solid #ec4899;
-      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
+      border-left: 4px solid #3b82f6;
+      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(59, 130, 246, 0.2);
       text-align: left;
       position: relative;
       z-index: 2;
@@ -171,14 +201,14 @@
     .btn-next {
       background: linear-gradient(90deg, #2563eb, #ec4899);
       color: white;
-      box-shadow: 0 0 18px rgba(236, 72, 153, 0.4);
+      box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
       width: 100%;
     }
 
     .btn-yes {
       background: linear-gradient(90deg, #ec4899, #3b82f6);
       color: white;
-      box-shadow: 0 0 20px rgba(236, 72, 153, 0.6);
+      box-shadow: 0 0 22px rgba(236, 72, 153, 0.7);
     }
 
     .btn-no {
@@ -247,6 +277,9 @@
   </style>
 </head>
 <body>
+
+  <!-- Canvas de fondo para el universo animado de las tarjetas -->
+  <canvas id="bg-stars-canvas"></canvas>
 
   <!-- Contenedor Galaxia 3D -->
   <div id="galaxy-container"></div>
@@ -340,6 +373,50 @@
   <script src="https://www.youtube.com/iframe_api"></script>
 
   <script>
+    // ANIMACIÓN DE FONDO DE UNIVERSO INTERACTIVO PARA LAS TARJETAS
+    const bgCanvas = document.getElementById('bg-stars-canvas');
+    const bgCtx = bgCanvas.getContext('2d');
+    let bgWidth, bgHeight;
+    let bgStars = [];
+
+    function initBgCanvas() {
+      bgWidth = bgCanvas.width = window.innerWidth;
+      bgHeight = bgCanvas.height = window.innerHeight;
+      bgStars = [];
+      const count = 120;
+      const colors = ['#60a5fa', '#f472b6', '#38bdf8', '#ffffff', '#fbbf24'];
+
+      for (let i = 0; i < count; i++) {
+        bgStars.push({
+          x: Math.random() * bgWidth,
+          y: Math.random() * bgHeight,
+          radius: Math.random() * 2 + 0.5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: Math.random(),
+          speed: Math.random() * 0.02 + 0.005
+        });
+      }
+    }
+
+    function animateBgCanvas() {
+      bgCtx.clearRect(0, 0, bgWidth, bgHeight);
+      bgStars.forEach(s => {
+        s.alpha += s.speed;
+        if (s.alpha > 1 || s.alpha < 0) s.speed = -s.speed;
+        bgCtx.globalAlpha = Math.abs(s.alpha);
+        bgCtx.fillStyle = s.color;
+        bgCtx.beginPath();
+        bgCtx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+        bgCtx.fill();
+      });
+      requestAnimationFrame(animateBgCanvas);
+    }
+
+    initBgCanvas();
+    animateBgCanvas();
+    window.addEventListener('resize', initBgCanvas);
+
+    // LÓGICA DE LAS TARJETAS Y RECHAZO JUGUETÓN
     let coverNoCount = 0;
     const coverMessages = [
       "¿Estás segura que no? 🥺💙",
@@ -362,12 +439,10 @@
 
       coverNoCount++;
 
-      // Aumentar progresivamente el tamaño del botón SÍ
       const newScale = 1 + (coverNoCount * 0.28);
       btnYes.style.transform = `scale(${newScale})`;
       btnYes.style.margin = `${coverNoCount * 12}px 0`;
 
-      // Si hace muchos clics, ocultar botón NO
       if (coverNoCount >= 5) {
         btnNo.style.display = 'none';
       }
@@ -431,6 +506,7 @@
 
     function aceptar() {
       document.getElementById('cards-wrapper').style.display = 'none';
+      document.getElementById('bg-stars-canvas').style.display = 'none';
       document.getElementById('galaxy-container').style.display = 'block';
       document.getElementById('galaxy-title').style.display = 'block';
 
@@ -709,7 +785,6 @@
 
       const canvasGroup = new THREE.Group();
       const spriteList = [];
-      const textureLoader = new THREE.TextureLoader();
 
       lista35Frases.forEach((elem, idx) => {
         const canvas = document.createElement('canvas');
