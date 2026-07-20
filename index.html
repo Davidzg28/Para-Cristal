@@ -33,7 +33,7 @@
       position: relative;
     }
 
-    /* Canvas de fondo para el universo de las tarjetas */
+    /* Canvas de fondo para el universo animado */
     #bg-stars-canvas {
       position: fixed;
       top: 0;
@@ -264,6 +264,16 @@
       animation: popIn 0.3s ease-out;
     }
 
+    #yt-hidden-player {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      opacity: 0.01;
+      pointer-events: none;
+    }
+
     @keyframes popIn {
       from { transform: translate(-50%, 20px) scale(0.8); opacity: 0; }
       to { transform: translate(-50%, 0) scale(1); opacity: 1; }
@@ -276,6 +286,9 @@
   </style>
 </head>
 <body>
+
+  <!-- Elemento de Audio Directo apuntando a tu archivo .m4a -->
+  <audio id="local-audio" loop src="Índigo   Camilo   Evaluna Montaner.m4a" preload="auto"></audio>
 
   <!-- Canvas de fondo para el universo animado -->
   <canvas id="bg-stars-canvas"></canvas>
@@ -293,7 +306,7 @@
     <button id="music-btn" onclick="toggleMusic()">🎵 Poner Índigo 💙</button>
   </div>
 
-  <div id="youtube-player"></div>
+  <div id="yt-hidden-player"></div>
 
   <main class="app-container" id="cards-wrapper">
     
@@ -372,6 +385,45 @@
   <script src="https://www.youtube.com/iframe_api"></script>
 
   <script>
+    // SISTEMA DE MÚSICA CON AUDIO LOCAL .M4A
+    let player;
+    let isPlaying = false;
+    const localAudio = document.getElementById('local-audio');
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('yt-hidden-player', {
+        height: '1',
+        width: '1',
+        videoId: 't0MwfRvw_40',
+        playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': 't0MwfRvw_40' }
+      });
+    }
+
+    function toggleMusic() {
+      const btn = document.getElementById('music-btn');
+
+      if (!isPlaying) {
+        localAudio.play().then(() => {
+          isPlaying = true;
+          btn.innerHTML = "⏸️ Pausar música";
+        }).catch((err) => {
+          console.log("Fallback a YouTube por:", err);
+          if (player && player.playVideo) {
+            player.playVideo();
+            isPlaying = true;
+            btn.innerHTML = "⏸️ Pausar música";
+          }
+        });
+      } else {
+        localAudio.pause();
+        if (player && player.pauseVideo) {
+          player.pauseVideo();
+        }
+        isPlaying = false;
+        btn.innerHTML = "🎵 Poner Índigo 💙";
+      }
+    }
+
     // ANIMACIÓN DE FONDO DE UNIVERSO
     const bgCanvas = document.getElementById('bg-stars-canvas');
     const bgCtx = bgCanvas.getContext('2d');
@@ -448,7 +500,7 @@
     }
 
     function empezarCapitulo() {
-      if (!isPlaying && player && player.playVideo) {
+      if (!isPlaying) {
         toggleMusic();
       }
       siguienteTarjeta(1);
@@ -474,42 +526,13 @@
       btnNo.style.top = randomY + 'px';
     }
 
-    let player;
-    let isPlaying = false;
-
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('youtube-player', {
-        height: '0',
-        width: '0',
-        videoId: 't0MwfRvw_40',
-        playerVars: { 'playsinline': 1, 'loop': 1, 'playlist': 't0MwfRvw_40' }
-      });
-    }
-
-    function toggleMusic() {
-      const btn = document.getElementById('music-btn');
-      if (!isPlaying) {
-        if (player && player.playVideo) {
-          player.playVideo();
-          isPlaying = true;
-          btn.innerHTML = "⏸️ Pausar música";
-        }
-      } else {
-        if (player && player.pauseVideo) {
-          player.pauseVideo();
-          isPlaying = false;
-          btn.innerHTML = "🎵 Poner Índigo 💙";
-        }
-      }
-    }
-
     function aceptar() {
       document.getElementById('cards-wrapper').style.display = 'none';
       document.getElementById('bg-stars-canvas').style.display = 'none';
       document.getElementById('galaxy-container').style.display = 'block';
       document.getElementById('galaxy-title').style.display = 'block';
 
-      if (!isPlaying && player && player.playVideo) {
+      if (!isPlaying) {
         toggleMusic();
       }
 
@@ -743,8 +766,7 @@
       const bigTexture = new THREE.CanvasTexture(bigCanvas);
       const bigSpriteMat = new THREE.SpriteMaterial({ map: bigTexture, transparent: true });
       const bigSprite = new THREE.Sprite(bigSpriteMat);
-      
-      // Posición central destacada justo arriba del corazón
+
       bigSprite.position.set(0, 7.5, 0);
       bigSprite.scale.set(7.5, 2.25, 1);
       scene.add(bigSprite);
@@ -778,7 +800,7 @@
       scene.add(new THREE.AmbientLight(0x333333));
       scene.add(planetGroup);
 
-      // 4. FRASES AZULES (PERSONALIZADAS CON DAVID Y CRISTAL) + STICKERS CIRCULARES
+      // 4. FRASES AZULES + STICKERS CIRCULARES
       const lista35Frases = [
         { texto: "TU LUZ EN MI UNIVERSO 🌌", icon: "🐻🐼💖" },
         { texto: "DAVID Y CRISTAL 💙", icon: "🧸✨" },
@@ -984,7 +1006,6 @@
         const heartBeatScale = 1 + Math.sin(elapsedTime * 4.5) * 0.12; 
         heartMesh.scale.set(heartBeatScale, heartBeatScale, heartBeatScale);
 
-        // Balanceo leve del letrero "TÚ Y YO"
         bigSprite.position.y = 7.5 + Math.sin(elapsedTime * 2) * 0.3;
 
         planetGroup.children.forEach(planet => {
