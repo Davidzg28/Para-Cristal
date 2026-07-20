@@ -271,11 +271,15 @@
       <div class="card-sunflower-bottom">🌻 💖 🌻</div>
       <div style="font-size: 4rem; margin-bottom: 15px; animation: ambientGlow 3s infinite alternate;">📖✨</div>
       <h1 class="title-text">Un Nuevo Capítulo 💙💖</h1>
-      <p class="card-caption" style="text-align: center; font-size: 1.05rem;">
+      <p class="card-caption" id="cover-caption-text" style="text-align: center; font-size: 1.05rem;">
         ¡Hola, Cristal! 👋<br><br>
         ¿Estás lista para comenzar a leer un nuevo capítulo juntos? 📖✨
       </p>
-      <button class="btn btn-next" onclick="empezarCapitulo()">✨ ¡Sí, empecemos! ✨</button>
+      
+      <div class="buttons-container" id="cover-btn-box" style="flex-direction: column; align-items: center; gap: 12px; min-height: 100px;">
+        <button class="btn btn-next" id="btn-cover-yes" onclick="empezarCapitulo()" style="transition: transform 0.3s ease, margin 0.3s ease; z-index: 10;">✨ ¡Sí, empecemos! ✨</button>
+        <button class="btn btn-no" id="btn-cover-no" onclick="rechazarPortada()" style="position: relative; right: auto; width: 100px;">💔 No</button>
+      </div>
     </div>
 
     <!-- TARJETA 1 -->
@@ -336,6 +340,39 @@
   <script src="https://www.youtube.com/iframe_api"></script>
 
   <script>
+    let coverNoCount = 0;
+    const coverMessages = [
+      "¿Estás segura que no? 🥺💙",
+      "¡Piénsalo bien, Cristal! 🥺✨",
+      "¿De verdad no quieres ver lo que preparé con tanto cariño? 💔",
+      "¡Oye! ¡Di que sí por favor! 🥺💙",
+      "¡Ya no hay opción de decir que no! 😉✨"
+    ];
+
+    function rechazarPortada() {
+      const caption = document.getElementById('cover-caption-text');
+      const btnYes = document.getElementById('btn-cover-yes');
+      const btnNo = document.getElementById('btn-cover-no');
+
+      if (coverNoCount < coverMessages.length) {
+        caption.innerHTML = coverMessages[coverNoCount];
+      } else {
+        caption.innerHTML = "¡El 'Sí' es tan grande que ya no puedes decir que no! 💙✨";
+      }
+
+      coverNoCount++;
+
+      // Aumentar progresivamente el tamaño del botón SÍ
+      const newScale = 1 + (coverNoCount * 0.28);
+      btnYes.style.transform = `scale(${newScale})`;
+      btnYes.style.margin = `${coverNoCount * 12}px 0`;
+
+      // Si hace muchos clics, ocultar botón NO
+      if (coverNoCount >= 5) {
+        btnNo.style.display = 'none';
+      }
+    }
+
     function empezarCapitulo() {
       if (!isPlaying && player && player.playVideo) {
         toggleMusic();
