@@ -48,6 +48,11 @@
       backdrop-filter: blur(8px);
     }
 
+    /* Ocultar el cuadro del video de YouTube pero dejar sonar el audio */
+    #youtube-iframe {
+      display: none;
+    }
+
     .app-container {
       max-width: 450px;
       width: 100%;
@@ -138,13 +143,13 @@
 </head>
 <body>
 
-  <!-- Reproductor de Música (Índigo - Camilo) -->
+  <!-- Reproductor de Música (YouTube - Índigo de Camilo) -->
   <div class="music-player">
     <button id="music-btn" onclick="toggleMusic()">🎵 Poner Índigo 💙</button>
-    <audio id="bg-music" loop>
-      <source src="https://ia801503.us.archive.org/15/items/indigo-camilo-evaluna/Indigo.mp3" type="audio/mpeg">
-    </audio>
   </div>
+
+  <!-- Contenedor invisible de YouTube API -->
+  <div id="youtube-player"></div>
 
   <main class="app-container">
     
@@ -174,16 +179,40 @@
 
   </main>
 
+  <!-- Cargar API de YouTube -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+
   <script>
+    let player;
+    let isPlaying = false;
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('youtube-player', {
+        height: '0',
+        width: '0',
+        videoId: 't0MwfRvw_40', // ID del video oficial de Índigo (Camilo y Evaluna)
+        playerVars: {
+          'playsinline': 1,
+          'loop': 1,
+          'playlist': 't0MwfRvw_40'
+        }
+      });
+    }
+
     function toggleMusic() {
-      const audio = document.getElementById('bg-music');
       const btn = document.getElementById('music-btn');
-      if (audio.paused) {
-        audio.play();
-        btn.innerHTML = "⏸️ Pausar música";
+      if (!isPlaying) {
+        if (player && player.playVideo) {
+          player.playVideo();
+          isPlaying = true;
+          btn.innerHTML = "⏸️ Pausar música";
+        }
       } else {
-        audio.pause();
-        btn.innerHTML = "🎵 Poner Índigo 💙";
+        if (player && player.pauseVideo) {
+          player.pauseVideo();
+          isPlaying = false;
+          btn.innerHTML = "🎵 Poner Índigo 💙";
+        }
       }
     }
 
