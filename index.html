@@ -61,26 +61,53 @@
     }
 
     /* Decoración de Girasoles en las tarjetas */
-    .card::before, .card::after {
-      content: "🌻 💖 🌻";
+    .card-sunflower-top, .card-sunflower-bottom {
       position: absolute;
       font-size: 1.1rem;
-      opacity: 0.8;
+      opacity: 0.85;
+      z-index: 5;
+      pointer-events: none;
     }
-    .card::before { top: 12px; left: 15px; }
-    .card::after { bottom: 12px; right: 15px; }
+    .card-sunflower-top { top: 12px; left: 15px; }
+    .card-sunflower-bottom { bottom: 12px; right: 15px; }
 
+    /* ESTILO HERMOSO PARA EL FONDO DE LAS TARJETAS */
     .card {
-      background: linear-gradient(145deg, rgba(13, 22, 45, 0.92) 0%, rgba(20, 10, 30, 0.92) 100%);
-      border: 2px solid #ec4899;
-      box-shadow: 0 0 35px rgba(236, 72, 153, 0.35), inset 0 0 15px rgba(59, 130, 246, 0.2);
-      backdrop-filter: blur(12px);
+      background: 
+        radial-gradient(circle at 10% 10%, rgba(236, 72, 153, 0.22) 0%, transparent 45%),
+        radial-gradient(circle at 90% 90%, rgba(59, 130, 246, 0.28) 0%, transparent 45%),
+        linear-gradient(145deg, rgba(15, 23, 42, 0.94) 0%, rgba(10, 15, 30, 0.96) 50%, rgba(20, 10, 30, 0.94) 100%);
+      border: 2px solid rgba(236, 72, 153, 0.65);
+      box-shadow: 
+        0 0 35px rgba(236, 72, 153, 0.35),
+        0 0 18px rgba(59, 130, 246, 0.25),
+        inset 0 0 25px rgba(236, 72, 153, 0.15);
+      backdrop-filter: blur(16px);
       border-radius: 26px;
       padding: 35px 22px;
       text-align: center;
       position: relative;
       display: none;
       animation: fadeIn 0.8s ease-in-out;
+      overflow: hidden;
+    }
+
+    /* Destellos de luz suave en el fondo de la tarjeta */
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+      pointer-events: none;
+      animation: ambientGlow 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes ambientGlow {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(20px, 20px); }
     }
 
     .card.active {
@@ -94,7 +121,9 @@
       border-radius: 18px;
       margin-bottom: 18px;
       border: 2px solid #f472b6;
-      box-shadow: 0 0 18px rgba(244, 114, 182, 0.4);
+      box-shadow: 0 0 20px rgba(244, 114, 182, 0.45);
+      position: relative;
+      z-index: 2;
     }
 
     .title-text {
@@ -104,6 +133,8 @@
       font-size: 1.8rem;
       margin-bottom: 15px;
       font-family: 'Playfair Display', serif;
+      position: relative;
+      z-index: 2;
     }
 
     .card-caption {
@@ -111,11 +142,14 @@
       line-height: 1.6;
       color: #e2e8f0;
       margin-bottom: 22px;
-      background: rgba(3, 7, 18, 0.55);
+      background: rgba(3, 7, 18, 0.65);
       padding: 16px;
       border-radius: 16px;
       border-left: 4px solid #ec4899;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
       text-align: left;
+      position: relative;
+      z-index: 2;
     }
 
     .buttons-container {
@@ -124,6 +158,7 @@
       gap: 15px;
       position: relative;
       min-height: 55px;
+      z-index: 2;
     }
 
     .btn {
@@ -237,6 +272,8 @@
     
     <!-- TARJETA 1 -->
     <div id="card-1" class="card active">
+      <div class="card-sunflower-top">🌻 💖 🌻</div>
+      <div class="card-sunflower-bottom">🌻 💖 🌻</div>
       <img src="tarjeta1.jpeg" alt="Foto 1" class="card-img">
       <h1 class="title-text">¡Hola, Cristal! 👋💙💖</h1>
       <p class="card-caption">
@@ -247,6 +284,8 @@
 
     <!-- TARJETA 2 -->
     <div id="card-2" class="card">
+      <div class="card-sunflower-top">🌻 💖 🌻</div>
+      <div class="card-sunflower-bottom">🌻 💖 🌻</div>
       <img src="tarjeta2.jpeg" alt="Foto 2" class="card-img">
       <h1 class="title-text">Un detalle para ti 🌻💖</h1>
       <p class="card-caption">
@@ -257,6 +296,8 @@
 
     <!-- TARJETA 3 -->
     <div id="card-3" class="card">
+      <div class="card-sunflower-top">🌻 💖 🌻</div>
+      <div class="card-sunflower-bottom">🌻 💖 🌻</div>
       <img src="tarjeta3.png" alt="Foto 3" class="card-img">
       <h1 class="title-text">Coincidencia Divina 🌌💖</h1>
       <p class="card-caption">
@@ -268,6 +309,8 @@
 
     <!-- TARJETA 4 -->
     <div id="card-4" class="card">
+      <div class="card-sunflower-top">🌻 💖 🌻</div>
+      <div class="card-sunflower-bottom">🌻 💖 🌻</div>
       <img src="tarjeta4.jpeg" alt="Foto 4" class="card-img">
       <h1 class="title-text">Tengo una pregunta... 💍💙</h1>
       <p class="card-caption" style="text-align: center; font-size: 1.1rem; font-weight: 600;">
@@ -616,7 +659,7 @@
         }
       });
 
-      // ANIMACIÓN CONTINUA (INCLUYE EL LATIDO DEL CORAZÓN)
+      // ANIMACIÓN CONTINUA
       const clock = new THREE.Clock();
 
       function animate() {
@@ -624,10 +667,8 @@
 
         controls.update();
 
-        // Rotación de la galaxia
         galaxy.rotation.y = elapsedTime * 0.035;
         
-        // Explosión y atracción hacia la forma del Corazón
         const currentPositions = heartGeo.attributes.position.array;
         for (let i = 0; i < heartPointCount; i++) {
           const idx = i * 3;
@@ -646,12 +687,10 @@
         }
         heartGeo.attributes.position.needsUpdate = true;
 
-        // Rotación LENTA y LATIDO RÍTMICO DEL CORAZÓN 3D (Efecto Pulse)
         heartMesh.rotation.y = elapsedTime * 0.12; 
         const heartBeatScale = 1 + Math.sin(elapsedTime * 4.5) * 0.12; 
         heartMesh.scale.set(heartBeatScale, heartBeatScale, heartBeatScale);
 
-        // Rotación de planetas
         planetGroup.children.forEach(planet => {
           if (planet.userData.angle !== undefined) {
             planet.userData.angle += planet.userData.speed;
@@ -661,7 +700,6 @@
           }
         });
 
-        // Rotación de frases
         canvasGroup.children.forEach(sprite => {
           if (sprite.userData.angle !== undefined) {
             sprite.userData.angle += sprite.userData.speed;
