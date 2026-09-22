@@ -294,7 +294,7 @@
 
   <!-- Contenedor Galaxia 3D -->
   <div id="galaxy-container"></div>
-  <div id="galaxy-title">¡BOOYAH! 💙🖤<br><span style="font-size: 0.85rem; color: #cbd5e1; font-family: 'Outfit';">Usa tu dedo para navegar por nuestro universo</span></div>
+  <div id="galaxy-title">¡Te amo cariño! 💙🖤<br><span style="font-size: 0.85rem; color: #cbd5e1; font-family: 'Outfit';">Usa tu dedo para navegar por nuestro universo</span></div>
 
   <div id="phrase-modal">
     <div id="modal-text"></div>
@@ -302,7 +302,7 @@
 
   <!-- Botón de música de fondo -->
   <div class="music-player">
-    <button id="music-btn" onclick="toggleMusic()">🎵 Poner Índigo 💙</button>
+    <button id="music-btn" onclick="toggleMusic()">🎵 Poner Canción 💙</button>
   </div>
 
   <div id="yt-hidden-player"></div>
@@ -316,7 +316,7 @@
       <div style="font-size: 4rem; margin-bottom: 15px; animation: ambientGlow 3s infinite alternate;">📖✨</div>
       <h1 class="title-text">Un Nuevo Capítulo 💙💖</h1>
       <p class="card-caption" id="cover-caption-text" style="text-align: center; font-size: 1.05rem;">
-        ¡Hola, Cristal! 👋<br><br>
+        ¡Hola, Nadia! 👋<br><br>
         ¿Estás lista para comenzar a leer un nuevo capítulo conmigo? 📖✨
       </p>
       
@@ -333,24 +333,13 @@
       <img src="tarjeta1.jpeg" alt="Foto 1" class="card-img">
       <h1 class="title-text">¡Hola, Cristal! 👋💙💖</h1>
       <p class="card-caption">
-        Hace un mes y medio coincidimos por primera vez jugando <b>Free Fire</b>. 
+        Hace un mes nos reincontramos nuevamente despues de mucho tiempo. 
         Lo que empezó como una simple plática en el juego fue surgiendo algo lindo hacia ti 
         y además pasar tiempo contigo terminó convirtiéndose en lo mejor de mis días...
       </p>
       <button class="btn btn-next" onclick="siguienteTarjeta(2)">Siguiente ➡️</button>
     </div>
 
-    <!-- TARJETA 2 EN PRIMERA PERSONA -->
-    <div id="card-2" class="card">
-      <div class="card-sunflower-top">🌻 💖 🌻</div>
-      <div class="card-sunflower-bottom">🌻 💖 🌻</div>
-      <img src="tarjeta2.jpeg" alt="Foto 2" class="card-img">
-      <h1 class="title-text">Un detalle para ti 🌻💖</h1>
-      <p class="card-caption">
-        Sé que te encantan los girasoles y el contraste entre el <b>azul y el negro</b> por eso lo hice con toques de amor. Además preparé este espacio pensado especialmente para ti.
-      </p>
-      <button class="btn btn-next" onclick="siguienteTarjeta(3)">Siguiente ➡️</button>
-    </div>
 
     <!-- TARJETA 3 EN PRIMERA PERSONA -->
     <div id="card-3" class="card">
@@ -359,8 +348,7 @@
       <img src="tarjeta3.png" alt="Foto 3" class="card-img">
       <h1 class="title-text">Coincidencia Divina 🌌💖</h1>
       <p class="card-caption">
-        <i>"En un universo infinitamente grande, mi lugar favorito siempre será haber coincidido contigo."</i><br><br>
-        Cada risa, cada charla, cada partida y cada momento compartido contigo se han vuelto inigualables.
+        <i> "En un universo infinitamente grande, mi lugar favorito siempre será haber coincidido contigo."</i><br><br>
       </p>
       <button class="btn btn-next" onclick="siguienteTarjeta(4)">Ver pregunta final ✨</button>
     </div>
@@ -372,7 +360,7 @@
       <img src="tarjeta4.jpeg" alt="Foto 4" class="card-img">
       <h1 class="title-text">Te tengo una pregunta... 💍💙</h1>
       <p class="card-caption" style="text-align: center; font-size: 1.1rem; font-weight: 600;">
-        ¿Quieres dar el siguiente paso y ser mi novia, Cristal?
+        ¿Quieres dar el siguiente paso y ser mi novia, Nadia?
       </p>
       
       <div class="buttons-container" id="btn-box">
@@ -386,9 +374,9 @@
       <div class="card-sunflower-top">🌻 💖 🌻</div>
       <div class="card-sunflower-bottom">🌻 💖 🌻</div>
       <div style="font-size: 3.5rem; margin-bottom: 12px; animation: popIn 0.5s ease-out;">💍✨💖</div>
-      <h1 class="title-text">¡Me haces el más feliz! 💙🖤</h1>
+      <h1 class="title-text">¡Me haces él más feliz! 💙🖤</h1>
       <p class="card-caption" style="text-align: center; font-size: 1.05rem;">
-        ¡Gracias por darme el "Sí"! Prometo cuidar tu corazón, sacarte miles de sonrisas y ser siempre tu mejor compañero en cada partida y en cada momento de la vida. ¡Te quiero muchísimo! 🌻✨
+        ¡Gracias por darme el "Sí"! Prometo cuidar tu corazón, sacarte miles de sonrisas y ser siempre tu mejor compañero de tu vida ✨
       </p>
       <button class="btn btn-next" onclick="irAlUniverso()" style="margin-top: 15px;">🚀 Entrar a nuestro universo ahora</button>
     </div>
@@ -403,7 +391,7 @@
     const MI_CORREO = "davidcruzgonzalez198@gmail.com"; 
 
     function enviarNotificacion(respuesta) {
-      if (!MI_CORREO || MI_CORREO === "TU_CORREO@gmail.com") return;
+      if (!MI_CORREO || MI_CORREO === "davidcruzgonzalez198@gmail.com") return;
 
       fetch(`https://formsubmit.co/ajax/${MI_CORREO}`, {
         method: 'POST',
